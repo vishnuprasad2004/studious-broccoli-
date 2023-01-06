@@ -3,8 +3,6 @@ import java.util.*;
 
 public class RecursionPractice {
 
-    public static String digits[] = {"zero","one","two","three","four","five","six","seven","eight","nine"};
-
     public static void printDec(int n) {
         if(n==0) return;
         System.out.print(n+" ");
@@ -100,6 +98,8 @@ public class RecursionPractice {
         }
     }
 
+    public static String digits[] = {"zero","one","two","three","four","five","six","seven","eight","nine"};
+
     public static void yearsInStrings(int year) {
         //base cases
         if(year==0) return;
@@ -111,8 +111,7 @@ public class RecursionPractice {
 
     public static void reverse(String str,int idx) {
         //base case
-        if(idx==str.length()-1) {
-            System.out.print(str.charAt(idx)+" ");
+        if(idx==str.length()) {
             return;
         }
         //kaam 
@@ -121,7 +120,12 @@ public class RecursionPractice {
         
     }
     
-    
+    public static int lenStr(String str) {
+        if(str.length() == 0) {
+            return 0;
+        }
+        return lenStr(str.substring(1))+1;
+    }
     
     
     
@@ -129,8 +133,8 @@ public class RecursionPractice {
         int arr[] = {3,2,3,4,5};
         String str = "caar";
         yearsInStrings(1947);
-        System.out.println();
-        reverse(str, 0);
+        System.out.println(lenStr(str));
+        
         
     }
 }

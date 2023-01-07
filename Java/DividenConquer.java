@@ -6,12 +6,12 @@ class DividenConquer{
             System.out.print(arr[i]+" ");
         }
         System.out.println();
-    }
+    } 
     
     public static void mergeSort(int arr[],int si,int ei) {
         if(si>=ei) {
             return;
-        }
+        } 
         //can also be mid = (si+ei)/2 but its inefficient for longgg arrays
         int mid = si + (ei-si)/2; 
         mergeSort(arr, si, mid);    //left part
@@ -33,13 +33,11 @@ class DividenConquer{
         }
         //for the leftovers in the left
         while(i<=mid) {
-            temp[k] = arr[i++];
-            k++;
+            temp[k++] = arr[i++];
         }
         //for the leftovers in the right 
         while(j<=ei) {
-            temp[k] = arr[j++];
-            k++;
+            temp[k++] = arr[j++];
         }
         //copying the arranged numbers in the original array
         for(k=0,i=si;k<temp.length;k++,i++) {

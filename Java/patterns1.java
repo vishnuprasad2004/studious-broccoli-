@@ -51,7 +51,7 @@ public class patterns1{
             }
             System.out.println();
         } 
-    // A
+    // A  
     // B C
     // D E F 
     // G H I J K 

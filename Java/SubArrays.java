@@ -66,6 +66,7 @@ public class SubArrays {
         return max;
     }
 
+    //IMPORTANT!!!
     public static int kadanes(int arr[]) {
         int max = Integer.MIN_VALUE;
         int sum = 0;
@@ -97,7 +98,10 @@ public class SubArrays {
 
 
     public static void main(String[] args) {
-        
+        int arr[] = {1,-2,6,-1,3};
+        System.out.println(maxInSubarrays(arr));
+        System.out.println(maxInSubArr_PrefixMethod(arr));
+        System.out.println(kadanes(arr));
     }
     
 }

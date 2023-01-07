@@ -10,7 +10,7 @@ class FirstClass {
             System.out.println();
         }
         
-         
+    // :) My first official logical tough question.It was very interesting...     
         
         
             

@@ -69,7 +69,7 @@ public class StringsPractice {
         
     }
 
-    public static boolean areAnagram(String str1 , String str2) {
+    public static boolean areAnagram(String str1 , String str2) {  //GOOD QUESTION
         //as we dont want to compare for uppercase and lowercase separately
         str1.toLowerCase();
         str2.toLowerCase();

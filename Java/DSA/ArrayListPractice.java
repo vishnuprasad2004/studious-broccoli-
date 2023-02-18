@@ -19,7 +19,7 @@ public class ArrayListPractice {
             System.out.print("Enter the element:");
             int num = sc.nextInt();
             list.add(num);
-            System.out.println();
+            
         }
         return list;
     }
@@ -84,14 +84,43 @@ public class ArrayListPractice {
         
     }
 
+    public static void pairSum2(ArrayList<Integer> list,int target) {
+        int n = list.size();
+        int bp=-1;
+        for(int i=0;i<n;i++) {
+            if(list.get(i) > list.get(i+1)){
+                bp = i;
+                break;
+            }
+        }
+        int lp = bp+1;
+        int rp = bp;
+        while(lp!=rp) {
+            if(list.get(lp) + list.get(rp) == target) {
+                System.out.println("(" + list.get(lp) + "," + list.get(rp) + ")");
+                return;
+            }else if(list.get(lp) + list.get(rp) < target) {
+                lp = (lp+1)%n;
+            }else {
+                rp = (rp+n-1)%n;
+            }
+        }
+        
+    }
+    
+
     public static void main(String[] args) {
         
-        ArrayList<Integer> list = inputGenerate(10);
-        for(int i=1;i<=6;i++) {
-            list.add(i);
-        }
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(11);
+        list.add(15);
+        list.add(6);
+        list.add(8);
+        list.add(9);
+        list.add(10);
+
         System.out.println(list);
-        pairSum1(list, 6);
+        pairSum2(list, 16);
 
 
       

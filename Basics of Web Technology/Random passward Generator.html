@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Passward Generator</title>
+</head>
+<body>
+    <button id="generate">Generate 10 bit passward </button><br>
+    <label>Passward :</label>
+    <label id="passwardLabel">...</label>
+
+    <!--Javascript-->
+    <script>
+        
+        let arr = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s",'t',"u","v","w","x","y","z","0","1","2","3","4","5","6","7","8","9"];
+        //length of arr = 36
+        
+        document.getElementById("generate").onclick = function() {
+            //document.getElementById("passwardLabel").innerHTML = "";
+            let passward = "";
+            for(let i=0;i<10;i++) {
+            let idx =Math.floor(Math.random()*36);
+            passward = passward + arr[idx];
+            }
+            console.log(passward);
+            document.getElementById("passwardLabel").innerHTML = passward;
+        }
+         
+
+    </script>
+
+</body>
+</html>

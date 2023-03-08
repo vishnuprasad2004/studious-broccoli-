@@ -4,32 +4,45 @@ const questionText = document.querySelector("#question");
 const resultText = document.querySelector("#result");
 const roundsText = document.getElementById("rounds");
 
+const timeDisplay = document.getElementById("timer");
+
 const operations = ["+","-","x"];
 let score = 0;
 let round = 0;
 
-let running  = false;
+//========================
+let running  = true;
+//==========
+let startTime = 0;
+let elapsedTime = 0;
+let mins = 0;
+let secs = 0;
+let intervalId;
+
 let x1,x2,opIdx;
 
 initialize();
 
 
 function initialize() {
-    running  = true;
-    //opIdx is random index produced for operations array
-    opIdx = Math.floor(Math.random()* 3);
-   
-    x1 = Math.floor(Math.random()*15)+1;
-    x2 = Math.floor(Math.random()*10)+1;
-    generateQuestion(x1,x2,opIdx);
-
-    submitBtn.onclick = function() {
-        check(x1,x2,opIdx);
-    }
-
-    round += 1;
-    roundsText.textContent = `${round}/10`;
+    if(running) {
+        running  = true;
+        startTime = Date.now() - elapsedTime;
+        intervalId = setInterval(updateTime,1000);
+        //opIdx is random index produced for operations array
+        opIdx = Math.floor(Math.random()* 3);
     
+        x1 = Math.floor(Math.random()*15)+1;
+        x2 = Math.floor(Math.random()*10)+1;
+        generateQuestion(x1,x2,opIdx);
+
+        submitBtn.onclick = function() {
+            check(x1,x2,opIdx);
+        }
+
+        round += 1;
+        roundsText.textContent = `${round}/10`;
+    }
 }
 
 function generateQuestion(x1,x2,opIdx) {
@@ -74,8 +87,8 @@ function next() {
     running = true;
 
     //ending condition
-    if(round == 10) {
-        if(score<=6) {
+    if(round == 10) {     
+        if(score<=5) {
             //for bad score => bg color is red.
             resultText.style.backgroundColor = "#ff0000";
         }else {
@@ -84,7 +97,12 @@ function next() {
         }
         resultText.textContent = "Your Score is " + score + "/" + round + ".";
         questionText.textContent = "Thank You for playing";
+        document.getElementById("answer").placeholder = " " ;
+        document.getElementById("answer").disabled = true;
+        
         running = false;
+        clearInterval(intervalId);
+
         return;
     }
 
@@ -100,11 +118,28 @@ function next() {
     submitBtn.onclick = function() {
         check(x1,x2,opIdx);
     }
-    
-    
+
     //resetting the result label to " "
     resultText.style.backgroundColor = "aliceblue";
     resultText.textContent = " ";
+}
+
+//utility function
+function updateTime() {
+    elapsedTime = Date.now() - startTime;
+
+    secs = Math.floor((elapsedTime / 1000) % 60);
+    mins = Math.floor((elapsedTime / (1000*60)) % 60);
+
+    function pad(unit) {
+        return (("0") + unit).length > 2 ? unit : "0"+unit; 
+    }
+
+    secs = pad(secs);
+    mins = pad(mins);
+
+    let time = `${mins}:${secs}`;
+    timeDisplay.textContent = time;
 }
 
 

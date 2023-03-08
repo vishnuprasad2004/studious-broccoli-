@@ -2,9 +2,7 @@
 const submitBtn = document.getElementById("submitBtn");
 const questionText = document.querySelector("#question");
 const resultText = document.querySelector("#result");
-const nextBtn = document.querySelector("#nextBtn");
-
-nextBtn.addEventListener("click",next);
+const roundsText = document.getElementById("rounds");
 
 const operations = ["+","-","x"];
 let score = 0;
@@ -23,7 +21,6 @@ function initialize() {
    
     x1 = Math.floor(Math.random()*15)+1;
     x2 = Math.floor(Math.random()*10)+1;
-
     generateQuestion(x1,x2,opIdx);
 
     submitBtn.onclick = function() {
@@ -31,6 +28,7 @@ function initialize() {
     }
 
     round += 1;
+    roundsText.textContent = `${round}/10`;
     
 }
 
@@ -53,35 +51,60 @@ function check(x1,x2,opIdx) {
     let input = document.getElementById("answer").value;
     input = Number(input);
     
+    //checking the answer generated and inputed
     if(answer != input) {
-        resultText.textContent = "Wrong Answer.."; 
+        resultText.textContent = "Wrong Answer"; 
+        resultText.style.backgroundColor = "#ff0000";
     }else {
-        resultText.textContent = "Good Job !!";
+        resultText.textContent = "Correct Answer";
+        resultText.style.backgroundColor = "#07da63";
         score+=1;
     }
+
     running  = false;
     console.log("score = " + score);
+
+    document.getElementById("answer").value = " ";
+    
+    //next question will appear after certain 
+    let timeout = setTimeout(next,1200);
 }
 
 function next() {
     running = true;
 
-    if(round == 3) {
+    //ending condition
+    if(round == 10) {
+        if(score<=6) {
+            //for bad score => bg color is red.
+            resultText.style.backgroundColor = "#ff0000";
+        }else {
+            //for good score => bg color is green.
+            resultText.style.backgroundColor = "#07da63";
+        }
         resultText.textContent = "Your Score is " + score + "/" + round + ".";
         questionText.textContent = "Thank You for playing";
         running = false;
+        return;
     }
 
+    round += 1;
+    roundsText.textContent = `${round}/10`;
+
+    //random x1 , x2 , operation Index
     let x1 = Math.floor(Math.random()*15)+1;
     let x2 = Math.floor(Math.random()*10)+1;
     let opIdx = Math.floor(Math.random()* 3);
-
     generateQuestion(x1,x2,opIdx);
 
     submitBtn.onclick = function() {
         check(x1,x2,opIdx);
     }
-    round += 1;
+    
+    
+    //resetting the result label to " "
+    resultText.style.backgroundColor = "aliceblue";
+    resultText.textContent = " ";
 }
 
 

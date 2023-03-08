@@ -2,6 +2,8 @@ body {
   background: linear-gradient(#f4c531,#b49324);
   background-repeat: no-repeat;
   background-attachment: fixed;
+  text-align: center;
+  margin: 0px;
 }
 
 
@@ -30,11 +32,10 @@ body {
     padding: 5px 50px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
     font-size: 16px;
 }
 
-div {
+#gameContainer {
   margin-right: auto;
   margin-left: auto;
   padding: 10px;
@@ -42,14 +43,14 @@ div {
   margin-top: 120px;
   background-color: aliceblue;
   border-radius:2px;
-  height: 300px;
+  height: 280px;
   width:500px;
   color:#0a3a40;
   box-shadow:unset;
   box-shadow: 0px 0px 15px #826a19;
 }
 
-input[type=text] {
+input[type=number] {
   width: 138px;
   border: #2e6b30;
   border-radius: 2px;
@@ -63,7 +64,7 @@ input[type=text] {
   
 }
 
-input[type=text]:active {
+input[type=number]:active {
   width: 138px;
   border: #2e6b30;
   border-radius: 2px;
@@ -81,9 +82,51 @@ label {
   font-size: 20px;
 }
 
+#result {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: aliceblue;
+  background-color:#f4c531;
+  opacity: 0.7;
+  border-radius: 3px;
+  width: 300px;
+  padding-left: 70px;
+  padding-right: 70px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+#rounds {
+  margin-top: 50px;
+  padding-left: 440px;
+}
+
 h3 {
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   
   text-shadow: #1c5b47;
   font-size: 35px;
+}
+
+footer {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 10px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  text-align: center;
+ 
+}
+
+#link {
+  color: aliceblue;
+  font-size: 14px;
+}
+
+#author {
+  font-size:15px;
+}
+
+#GitHubLink {
+  text-align: center;
 }

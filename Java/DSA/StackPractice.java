@@ -44,6 +44,34 @@ public class StackPractice {
         pushAtBottom(top, s);
     }
 
+    
+
+    public static int maxArea(int heights[]) { // 0(n^2) Brute Force
+        int maxArea = Integer.MIN_VALUE;
+        for(int i=0; i<heights.length; i++) {
+            int height = heights[i];
+            int width = 1;
+            int j = i+1;
+            while (j < heights.length) {
+                if(height <= heights[j]) {
+                    width++;
+                }
+                j++;
+            }
+            j = i-1;
+            while(j >= 0) {
+                if(height <= heights[j]) {
+                    width++;
+                }
+                j--;
+            }
+            int area = height * width;
+            maxArea = Math.max(maxArea,area);
+        }
+
+        return maxArea;
+    }
+
     public static void main(String[] args) {
         Stack<Integer> s = new Stack<>();
         s.push(1);
@@ -52,8 +80,11 @@ public class StackPractice {
         s.push(4);
 
         //printStack(s);
-        reverseStack(s);
-        printStack(s);
+        // reverseStack(s);
+        // printStack(s);
+
+        int heights[] ={1,2,2};// {2,1,5,6,2,3};
+        System.out.println(maxArea(heights));
        
     }
 }

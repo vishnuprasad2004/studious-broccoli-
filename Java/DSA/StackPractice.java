@@ -43,9 +43,7 @@ public class StackPractice {
         reverseStack(s);
         pushAtBottom(top, s);
     }
-
-    
-
+ 
     public static int maxArea(int heights[]) { // 0(n^2) Brute Force
         int maxArea = Integer.MIN_VALUE;
         for(int i=0; i<heights.length; i++) {

@@ -1,0 +1,93 @@
+#block1{
+    background-color:#9dd7d9; 
+    padding: 15px; 
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin: auto;
+    margin-top: 50px;
+    border-style:solid ;
+    border-color:#1d3557;
+    border-radius: 10px;
+    width: 500px;
+    height: 300px;
+
+}
+
+
+#block2{
+    background-color: #f1faee; 
+    padding: 15px; 
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin: auto;
+    border-radius: 10px;
+    margin-top: 50px;
+    border-style:solid ;
+    border-color: #457b9d;
+    width: 500px;
+    height: 300px;
+
+}
+
+#submitBtn:hover {
+    padding: 10px;
+    background-color:#e32939;
+    margin-top: 10px;
+}
+#submitBtn {
+    padding: 10px;
+    background-color:#e04c59;
+    margin-top: 10px;
+}
+
+#submitBtn:active {
+    padding: 10px;
+    background-color:#33ff00;
+    margin-top: 10px;
+}
+
+
+#mySelfBody {
+    background: linear-gradient(to top, #1d3557 ,#457b9d ) ;
+    background-attachment: fixed;
+}
+    
+#mainBody{
+    background-image: url(bg.svg);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    margin: 0px;
+   
+}
+header{
+    background-color: brown;
+    margin-top: 0px;
+}
+
+header div ul {
+    list-style:none;
+    margin: 0px;
+    padding: 5px;
+    display: flex;
+    margin-left: 30px;
+    color:beige;
+    align-self: center;
+}
+header div h1{
+    color:white;
+    font-size: 35px;
+    margin-left: 1%;
+
+}
+
+header nav ul li {
+    margin-right: 250px;
+    align-self: center;
+}
+
+#heading{
+    align-self:center;
+}
+
+.dark {
+    background-color: #0f1d2f;
+    color:azure;
+}

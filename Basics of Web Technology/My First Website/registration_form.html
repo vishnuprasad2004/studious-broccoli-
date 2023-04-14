@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySelf Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
+</head>
+<body id="mySelfBody">
+    <div id="block1">
+    <h4>PERSONAL INFORMATION</h4>
+        <form>
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" placeholder="Rohit" name="firstName">
+            <br>
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" placeholder="Sharma" name="lastName">
+            <br>
+            <label for="age">Age:</label>
+            <input type="text" name="age" id="age">
+            <br>
+            <label for="country">Country:</label>
+            <input type="text" name="country" id="country" placeholder="India">
+            <br>
+            <label for="dob">Date of Birth:</label>
+            <input type="date" name="dob" id="dob">
+            <br>
+            <label for="user_email">Email:</label>
+            <input type="email" name="user_email" id="userEmail" placeholder="spongebob@gmail.com">
+            <br>
+            <label for="semester">Semester:</label>
+            <input type="number" name="semester" id="semester" max="8" min="1" >
+            <br>
+            <label for="institution">Institution:</label>
+            <input type="text" name="institution" id="institution" placeholder="Indian Institute of Technology">
+
+        </form>
+
+        <button id="submitBtn" type="submit" onclick="generateParagraph()">Generate Response</button>
+        <br>
+        
+    </div>
+
+    <div id="block2">
+        <p id="generatedParagraph"></p>
+    </div>
+</body>
+</html>

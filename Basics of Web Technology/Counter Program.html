@@ -6,41 +6,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Counter Program</title>
     <style>
+        body {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            text-align: center;
+        }
+
+        #container-wrapper {
+            display: grid;
+            margin-left:20%;
+            margin-right:20%;
+            grid-template-columns: repeat(2,350px);
+            gap: 50px;
+        }
+
+        @media (max-width:900px) {
+            #container-wrapper {
+                grid-template-columns: none;
+            }
+        }
         .btn {
             font-size: 15px;
+            background-color:rgb(255, 255, 255);
+            border-radius:5px;
+            padding: 5px;
+            margin: 3px;
+            cursor: pointer;  
+            border: 1px solid #000000;
+            transition: 100ms ease-in;
+        }
+
+        .btn:hover, .btn:focus {
+            background-color: #000000;
+            color:white;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 90px;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow:0px 0px 10px #d6d6d6;
+        }
+
+        .name {
+            font-size: 20px;
+            border: none;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #ffffff;
             
         }
+
+        .name:hover {
+            border: 1px solid #dddddd;
+        }
+
     </style>
 </head>
 <body>
-    <div>
-        <label id="countLabel" style="font-size: 100px; margin-left: 80px;">0</label><br>
-        <button id="decreaseBtn" class="btn">Decrease</button>
-        <button id="resetBtn" class="btn">Reset</button>
-        <button id="increaseBtn" class="btn">Increase</button>
+    <div id="container-wrapper">
+        <div class="container">
+            <input type="text" value="Team 1" class="name" placeholder="Team 1"><br>
+            <label class="countLabel" style="font-size: 100px;">0</label><br>
+            <button class="btn decreaseBtn">Decrease</button>
+            <button class="btn resetBtn">Reset</button>
+            <button class="btn increaseBtn">Increase</button>
+        </div>
+        <div class="container">
+            <input type="text" value="Team 2" class="name" placeholder="Team 2"><br>
+            <label class="countLabel" style="font-size: 100px;">0</label><br>
+            <button class="btn decreaseBtn">Decrease</button>
+            <button class="btn resetBtn">Reset</button>
+            <button class="btn increaseBtn">Increase</button>
+        </div>
     </div>
     <script>
-        let count = 0;
+        let count1 = 0;
+        let count2 = 0;
 
-        document.getElementById("decreaseBtn").onclick = function () {
-            if(count<=0) {
-                count = 0;
-            }else {
-                count-=1;
-            }
-            document.getElementById("countLabel").innerHTML = count;
+        let decreaseBtns = document.querySelectorAll(".decreaseBtn");
+        let resetBtns = document.querySelectorAll(".resetBtn");
+        let increaseBtns = document.querySelectorAll(".increaseBtn");
+        let scores = document.querySelectorAll(".countLabel");
+
+        increaseBtns[0].onclick = () => {
+            count1+=1;
+            scores[0].textContent = count1;
         }
-
-        document.getElementById("resetBtn").onclick = function () {
-            count = 0;
-            document.getElementById("countLabel").innerHTML = count;
+        increaseBtns[1].onclick = () => {
+            count2+=1;
+            scores[1].textContent = count2;
         }
-
-        document.getElementById("increaseBtn").onclick = function () {
-            count+=1;
-            document.getElementById("countLabel").innerHTML = count;
+        resetBtns[0].onclick = () => {
+            count1 = 0;
+            scores[0].textContent = count1;          
         }
-
+        resetBtns[1].onclick = () => {
+            count2 = 0;
+            scores[1].textContent = count2;          
+        }
+        decreaseBtns[0].onclick = () => {
+            if(count1<=0) count1=0;
+            else count1-=1;
+            scores[0].textContent = count1;          
+        }
+        decreaseBtns[1].onclick = () => {
+            if(count2<=0) count2=0;
+            else count2-=1;
+            scores[1].textContent = count2;          
+        }
+        
     </script>
 </body>
 </html>

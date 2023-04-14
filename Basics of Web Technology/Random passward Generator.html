@@ -5,11 +5,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Passward Generator</title>
+    <style>
+        .container {
+            font-family:Arial, Helvetica, sans-serif;
+            box-shadow: 0 0 10px #c6c6c6;
+            border-radius: 5px;
+            padding: 20px;
+            height: 100px;
+            width: 200px;
+            margin: auto;
+            margin-top: 250px;
+        }
+        #generate {
+            background-color: #1123c2;
+            border:2px solid #1123c2;
+            color:aliceblue;
+            padding: 10px;
+            border-radius:3px;
+            margin-top: 10px;
+        }
+        #generate:hover {
+            background-color: rgb(255, 255, 255);
+            color:#1123c2;
+            border:2px solid #1123c2;
+        }
+    </style>
 </head>
 <body>
-    <button id="generate">Generate 10 bit passward </button><br>
-    <label>Passward :</label>
-    <label id="passwardLabel">...</label>
+    <div class="container">
+        <label>Passward :</label>
+        <label id="passwardLabel">...</label><br>
+        <button id="generate">Generate 10 bit Passward </button>
+    </div>
 
     <!--Javascript-->
     <script>

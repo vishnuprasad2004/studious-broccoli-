@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML</title>
+    <style>
+        .code {
+            background-color: rgb(35, 35, 35);
+            color:aliceblue;
+            font-family: monospace;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 15px;
+            /* text-decoration: underline #646464; */
+        }
+        .output {
+            border: 2px solid #646464;
+            border-radius: 5px;
+            padding:5px;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: rgb(240, 244, 248);
+
+        }
+        .item-wrapper {
+            /* background-color: #c1112fda; */
+            padding:2%;
+            display:grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border:3px solid #000000 ;
+        }
+        legend {
+            background-color: #ffffff;
+            /* position: absolute;
+            top:5px;
+            left:5%; */
+            font-size: 20px;
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+
+        }
+        span {
+            color:aliceblue;
+            background-color: #242424c5;
+            border-radius: 5px;
+            padding: 1px;
+            font-family: monospace;
+        }
+        label {
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 1px;
+        }
+
+    </style>
+</head>
+<body>
+
+
+    <!--Heading Tags-->
+<div>    
+    <legend>Heading Tags</legend>
+    <br>
+    <label>The <span>&lt;h1&gt;</span> to <span>&lt;h6&gt;</span> HTML elements represent six levels of section headings. <span>&lt;h1&gt;</span> is the highest section level and <span>&lt;h6&gt;</span> is the lowest.</label>
+    <div class="item-wrapper">
+        <div class="code">
+            <pre>
+&lt;body&gt;
+&lt;h1&gt;Ramesh Singh&lt;/h1&gt;      
+&lt;h2&gt;Ramesh Singh&lt;/h2&gt;     
+&lt;h3&gt;Ramesh Singh&lt;/h3&gt;
+&lt;h4&gt;Ramesh Singh&lt;/h4&gt;
+&lt;h5&gt;Ramesh Singh&lt;/h5&gt;
+&lt;h6&gt;Ramesh Singh&lt;/h6&gt;
+&lt;/body&gt;
+            </pre>
+        </div>
+
+        <div class="output">
+            <h1>Ramesh Singh</h1>
+            <h2>Ramesh Singh</h2>
+            <h3>Ramesh Singh</h3>
+            <h4>Ramesh Singh</h4>
+            <h5>Ramesh Singh</h5>
+            <h6>Ramesh Singh</h6>
+        </div>
+    </div>
+</div>
+<br>
+
+
+
+    <!--ul tag-->
+<div>
+    <legend>Unordered List</legend>
+    <br>
+    <label>The <span>&lt;ul&gt;</span> HTML element represents an unordered list of items, typically rendered as a bulleted list.</label>
+    <div class="item-wrapper">
+        <div class="code">
+            <pre>
+&lt;body&gt;
+&lt;h4&gt; Lemonade &lt;/h4&gt;
+&lt;ul&gt;
+    &lt;li&gt;Lemon&lt;/li&gt;
+    &lt;li&gt;Sugar&lt;/li&gt;
+    &lt;li&gt;Water&lt;/li&gt;
+    &lt;li&gt;Salt&lt;/li&gt;
+&lt;/ul&gt;      
+&lt;/body&gt;
+            </pre>
+        </div>
+
+        <div class="output">
+            <h4> Lemonade </h4>
+            <ul>
+                <li>Lemon</li>
+                <li>Sugar</li>
+                <li>Water</li>
+                <li>Salt</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+
+
+    <!--ol tag-->
+<div>
+    <legend>Ordered List</legend>
+    <br>
+    <label for="">The <span>&lt;ol&gt;</span> HTML element represents an ordered list of items — typically rendered as a numbered list.</label>
+    <div class="item-wrapper">
+        <div class="code">
+            <pre>
+&lt;body&gt;
+&lt;ol&gt;
+    &lt;li&gt;One&lt;/li&gt;
+    &lt;li&gt;Two&lt;/li&gt;
+    &lt;li&gt;Three&lt;/li&gt;
+    &lt;li&gt;Four&lt;/li&gt;
+&lt;/ol&gt;      
+&lt;/body&gt;
+            </pre>
+        </div>
+
+        <div class="output">
+            <ol>
+                <li>One</li>
+                <li>Two</li>
+                <li>Three</li>
+                <li>Four</li>
+            <ol>
+        </div>
+    </div>
+</div>
+<br>
+
+
+    <!--table tag-->
+<div>
+    <legend>Table</legend>
+    <br>
+    <label>The <span>&lt;table&gt;</span> HTML element represents tabular data — that is, information presented in a two-dimensional table comprised of rows and columns of cells containing data.</label><br>
+    <label>The <span>&lt;tr&gt;</span> HTML element defines a row of cells in a table. The row's cells can then be established using a mix of <span>&lt;td&gt;</span> (data cell) and <span>&lt;th&gt;</span> (header cell) elements.</label>
+    <div class="item-wrapper">
+        <div class="code">
+            <pre>
+&lt;body&gt;
+&lt;table border="1px #000000"&gt;
+    &lt;tr&gt;
+        &lt;th&gt;Serial No.&lt;/th&gt;
+        &lt;th&gt;Name&lt;/th&gt;
+        &lt;th&gt;Roll No.&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;001&lt;/td&gt;
+        &lt;td&gt;Virat Sharma&lt;/td&gt;
+        &lt;td&gt;CSE008&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;002&lt;/td&gt;
+        &lt;td&gt;Kabir Dhingra&lt;/td&gt;
+        &lt;td&gt;BTE089&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;003&lt;/td&gt;
+        &lt;td&gt;Ayush Behra&lt;/td&gt;
+        &lt;td&gt;ME034&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;      
+&lt;/body&gt;
+            </pre>
+        </div>
+
+        <div class="output">
+            <table border="1px #000000;">
+                <tr>
+                    <th>Serial No.</th>
+                    <th>Name</th>
+                    <th>Roll No.</th>
+                </tr>
+                <tr>
+                    <td>001</td>
+                    <td>Virat Sharma</td>
+                    <td>CSE008</td>
+                </tr>
+                <tr>
+                    <td>002</td>
+                    <td>Kabir Dhingra</td>
+                    <td>BTE089</td>
+                </tr>
+                <tr>
+                    <td>003</td>
+                    <td>Ayush Behra</td>
+                    <td>ME034</td>
+                </tr>
+                <tr>
+                    <td>001</td>
+                    <td>Virat Sharma</td>
+                    <td>CSE008</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<br>
+
+
+    <!--a tag-->
+<div>
+    <legend>Anchor Tag</legend>
+    <br>
+    <label>The <span>&lt;a&gt;</span> HTML element (or anchor element), with its href attribute, creates a hyperlink to web pages, files, email addresses, locations in the same page, or anything else a URL can address.</label><br>
+    <div class="item-wrapper">
+        <div class="code">
+            <pre>
+&lt;body&gt;
+    &lt;a href="www.google.com"&gt;Google&lt;/a&gt;
+&lt;/body&gt;
+            </pre>
+        </div>
+
+        <div class="output">
+            <a href="www.google.com">Google</a>
+        </div>
+    </div>
+</div>
+<br>
+
+    <!--input tag-->
+<div>
+    <legend>Input Tag</legend>
+    <br>
+    <label>The <span>&lt;input&gt;</span> tag takes user-input with different types of types like text, time, date, email, password</label><br>
+    <div class="item-wrapper">
+        <div class="code">
+            <pre>
+&lt;body&gt;
+&lt;label&gt;Enter your Name:&lt;/label&gt;
+&lt;input type="text" placeholder="Enter the text"&gt;
+&lt;br&gt;
+&lt;input type="checkbox"&gt;
+&lt;label&gt;Paneer Butter Masala&lt;/label&gt;&lt;br&gt;
+&lt;input type="checkbox"&gt;
+&lt;label&gt;Kadai Paneer&lt;/label&gt;&lt;br&gt;
+&lt;input type="checkbox"&gt;
+&lt;label&gt;Palak Paneer&lt;/label&gt;&lt;br&gt;
+&lt;br&gt;
+&lt;label&gt;Enter Date of Birth:&lt;/label&gt;
+&lt;input type="date"&gt;
+&lt;br&gt;
+&lt;label&gt;Insert your Image:&lt;/label&gt;
+&lt;input type="file" accept=".png,.jpg,.svg"&gt; 
+
+
+&lt;/body&gt;
+            </pre>
+        </div>
+
+        <div class="output">
+            <label>Enter your Name:</label>
+            <input type="text" placeholder="Enter the text">
+            <br> 
+            <input type="checkbox">
+            <label>Paneer Butter Masala</label><br>
+            <input type="checkbox">
+            <label>Kadai Paneer</label><br>
+            <input type="checkbox">
+            <label>Palak Paneer</label>
+            <br>
+            <label>Enter Date of Birth:</label>
+            <input type="date">
+            <br>
+            <label>Insert your Image:</label>
+            <input type="file" accept=".png,.jpg,.svg">
+            <br>
+            <label>Enter Meeting </label>
+            <input type="time" max="12:00" min="14:00">
+
+            
+
+
+        </div>
+    </div>
+</div>
+<br>
+
+</body>
+</html>

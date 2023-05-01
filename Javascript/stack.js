@@ -47,7 +47,7 @@ async function implementation() {
                 console.log("Stack is Empty");
                 continue;
             }
-            console,log(...stack);
+            console.log(...stack);
             console.log('\n');
 
         }else if(ch == 'peek'){

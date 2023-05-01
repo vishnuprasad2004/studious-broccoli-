@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Picker</title>
+    <style>
+        body {
+            height: 90vh;
+            width:90vw;
+
+            text-align: center;
+        }
+        #btn{
+            border:2px solid transparent;
+            background-color: black;
+            color: white;
+            margin-top:40vh;
+            padding: 15px;
+            border-radius: 0.5rem;
+            position:relative;
+            overflow:hidden;
+            
+        }
+        #btn:hover {
+            background-color:transparent;
+            color: black;
+            border:2px solid black;
+        }
+        #btn::after {
+            content: "Click to Change Color";
+            width:159px;
+            height:50px;
+            position:absolute;
+            top:0px;
+            left:0px;
+            background-color: black;
+            color:white;
+            text-align: center;
+            padding-top: 15px;
+            
+        }
+        
+        #btn:hover::after {
+           
+            transform: translateY(-65px);
+            transition:transform 200ms ease-in-out;
+        }
+
+    </style>
+</head>
+<body>
+    <button id="btn">Click to Change Color</button>
+    <script>
+        
+        function changeColor() {
+            const list = '123456789abedef';
+            let color = '#';
+            for(let i=0; i<6; i++) {
+                let index = Math.floor(Math.random()*15);
+                color = color + list.charAt(index);
+            } 
+
+            document.body.style.backgroundColor = color;
+            document.getElementById("btn").style.color = black;
+            
+
+
+        }
+        // document.body.addEventListener("mousemove",changeColor);
+        // let timer = setInterval(changeColor,150);
+        document.getElementById("btn").addEventListener("click",changeColor);
+    </script>
+</body>
+</html>

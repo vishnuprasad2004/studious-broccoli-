@@ -1,0 +1,40 @@
+<%- include('./head.ejs') %>
+
+<body>
+    
+    <% if (messages.error) { %>
+        <%= messages.error %>
+    <% } %>
+    <!--form-->
+    <form action="/login" method="post">
+        <table>
+            <tr>
+                <td colspan="2"> <h1>Login</h1></td>
+            </tr>
+            <tr>
+                <td><label for="email">Email:</label></td>
+                <td><input type="email" name="email" id="email" required></td>
+            </tr>
+            <tr>
+                <td><label for="password">Password:</label></td>
+                <td><input type="password" name="password" id="password" required></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Login</button></td>
+            </tr>
+        </table>
+    
+    <!--     
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required>
+        </div>
+        <button type="submit">Login</button> -->
+    </form>
+    
+    <a href="/register" title="Register Page">Don't have an Account, Register Now</a>
+</body>

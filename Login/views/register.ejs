@@ -1,0 +1,31 @@
+<%- include('./head.ejs') %>
+<body>
+
+    <!--form-->
+    <form action="/register" method="post">
+        <table>
+            <tr>
+                <td colspan="2"> <h1>Register</h1></td>
+            </tr>
+            <tr>
+                <td><label for="name">Name:</label></td>
+                <td><input type="text" name="name" id="name" required></td>
+            </tr>
+            <tr>
+                <td><label for="email">Email:</label></td>
+                <td><input type="email" name="email" id="email" required></td>
+            </tr>
+            <tr>
+                <td><label for="password">Password:</label></td>
+                <td><input type="password" name="password" id="password" required></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Register</button></td>
+            </tr>
+        </table>
+
+    </form>
+    
+    <a href="/login" title="Login Page">Login</a>
+</body>
+

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Now</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins');
+
+        @keyframes animate{
+            from {  transform: scale(0);    }
+            to {    transform: scale(1);    }
+        }
+        @keyframes animateReverse{
+            from {  transform: scale(1);    }
+            to {    transform: scale(0);    }
+        }
+        
+        :root {
+            --color:navy;
+        }
+
+        input[type=text] {
+            width:100%;
+        }
+        input[type=email] {
+            width:100%;
+        }
+        input[type=password] {
+            width:100%;
+            position: relative;
+        }
+        textarea {
+            font-family: 'Poppins',sans-serif;
+            font-size: 13px;
+        }
+        body {
+            height: 100vh;
+            width: 100vw;
+            text-align: center;
+            font-family: 'Poppins',sans-serif;
+        }
+        button {
+            background-color:var(--color);
+            color: white;
+            border-radius: 0.2rem;
+            padding: 0.5rem;
+            border: 2px solid transparent;
+            margin: auto;
+        }
+        button:hover {
+            border: 2px solid var(--color);
+            background-color: transparent;
+            color:var(--color);
+            
+        }
+        a {
+            text-decoration: none;
+            color:var(--color);
+        }
+        #form-container {
+            position: relative;
+            width: max-content;
+            animation: animate 1000ms ease-in;
+            background-color:white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin:auto;
+            text-align: left;
+        }
+        tr:last-child {
+            text-align: center;
+        }
+        .block {
+            display: none;
+            z-index: 1; /* Sit on top */
+            left: 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+        #error {
+            display: none;
+            padding: 0.3rem;
+            background-color: rgba(255, 125, 125, 0.2);
+            border-radius: 0.5rem;
+            border:1px solid rgba(169, 22, 22, 0.966);
+        }
+        #cross-btn {
+            position: absolute; 
+            width: fit-content;
+            font-size: 30px;
+            margin-left:80%;
+            cursor: pointer;
+        }
+        i {
+            position: absolute;
+            right: 30px;
+            margin-top: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!--sign in button-->
+    <button id="register">Sign In</button>
+    <div class="block">
+        <!--pop-up-->
+        <div id="form-container">
+            <span id="cross-btn">&Cross;</span>
+            <form id="form" method="post">
+                <table>
+                    <tr>
+                        <td colspan="2"> 
+                            <h1>Register Now</h1>
+                            <hr>
+                            <span id="error"></span>
+                        </td>     
+                    </tr>
+                    <tr>
+                        <td><label for="name"><span style="color:red;">*</span>Name:</label></td>
+                        <td><input type="text" name="name" id="name" placeholder="Tony Stark" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="gender">Gender:</label></td>
+                        <td>
+                            <input type="radio" name="gender" id="male" value="male">Male &nbsp;
+                            <input type="radio" name="gender" id="male" value="female">Female &nbsp;
+                            <input type="radio" name="gender" id="male" value="other">Others &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="address">Address:</label></td>
+                        <td><textarea name="" id="" cols="30" rows="3" placeholder="13 Bleeker Street, New York City"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><label for="email"><span style="color:red;">*</span>Email:</label></td>
+                        <td><input type="email" name="email" id="email" placeholder="tonystark@gmail.com" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password"><span style="color:red;">*</span>Password:</label></td>
+                        <td><input type="password" name="password" id="password" required><i class="far fa-eye" id="togglePassword"></i></td>
+                    </tr>
+                    <tr>
+                        <td><label for="confirmPassword"><span style="color:red;">*</span>Confirm Password:</label></td>
+                        <td><input type="password" name="confirmPassword" id="confirmPassword" required></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><br><button type="submit" id="submit">Sign In</button></td>
+                    </tr>
+                </table>
+            </form>
+            <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+            <p><a href="#">Aready have an Account, then Login</a></p>
+        </div>
+    </div>
+    <script>
+        const errorMsg = document.getElementById("error");
+
+        document.getElementById("register").onclick = () => {
+            document.getElementsByClassName("block")[0].style.display = "block";
+        }
+        
+        document.getElementById("cross-btn").addEventListener("click",() => {
+            document.getElementsByClassName("block")[0].style.display = "none";
+        });
+
+        document.getElementById("form").onsubmit = async(event) => {
+
+            console.log(document.getElementById("form").password.value);
+            console.log(document.getElementById("form").confirmPassword.value);
+            if(document.getElementById("form").password.value === document.getElementById("form").confirmPassword.value) {
+                document.getElementsByClassName("block")[0].style.display = "none";
+                errorMsg.style.display = 'none';
+                return true;
+            }else {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = 'Password is not same';
+                event.preventDefault();
+                return false;
+            }
+            
+        }
+
+        const password = document.querySelector('#password');
+        document.querySelector('#togglePassword').addEventListener('click', function (e) {
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            // toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+</body>
+</html>

@@ -27,7 +27,7 @@ public class StringsPractice {
     public static String subStrings(String str, int si, int ei) {
         String subString = "";
         for(int i=si;i<ei;i++) {
-            subString =+ str.charAt(i);
+            subString =subString + str.charAt(i);
         }
         return subString;
     }

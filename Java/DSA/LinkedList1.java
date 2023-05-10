@@ -1,6 +1,5 @@
-import java.util.*;
 
-public class LinkedList {
+public class LinkedList1 {
     
     public static class Node {
         int data;
@@ -11,6 +10,7 @@ public class LinkedList {
             this.next = null;
         }
     }
+
     public static Node head;
     public static Node tail;
     public static int size;
@@ -140,19 +140,83 @@ public class LinkedList {
         return helper(head,key);
     }
 
+    public void deleteNthfromEnd(int n) {
+        // calculate size
+        int sz = 0;
+        Node temp = head;
+        while(temp != null) {
+            temp = temp.next;
+            sz++;
+        }
+        if(n == sz) {
+            head = head.next;
+            return;
+        }
+        int i = 1;
+        Node prev = head;
+        while(i < sz-n) {
+            prev = prev.next;
+            i++;
+        }
+        prev.next = prev.next.next;
+    }  
 
+    // Slow-Fast Approach <= !!!IMPORTANT
+    public Node findMiddle(Node head) { // helper
+        Node hare = head;
+        Node turtle = head;
+        while(hare != null && hare.next !=null) {
+            turtle = turtle.next;  // +1
+            hare = hare.next.next; // +2
+        }
+        return turtle;
+    }
+
+    public boolean isPalindrome() {
+        if(head == null || head.next == null) {
+            return true;
+        }
+        //find mid
+        Node mid = findMiddle(head);
+        // reverse 2nd half
+        Node prev = null;
+        Node curr = mid;
+        Node next;
+        while(curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        Node right = prev; // right half head
+        Node left = head;
+        // check left half and right half
+        while(right != null) {
+            if(left.data != right.data) {
+                return false;    
+            }
+            left = left.next;
+            right = right.next;
+        }
+        return true;
+    }
 
     public static void main(String[] args) {
-        LinkedList ll = new LinkedList();
+        LinkedList1 ll = new LinkedList1();
+        // ll.addFirst(2);
+        // ll.addFirst(1);
+        // ll.addLast(3);
+        // ll.addLast(4);
+        // ll.addMiddle(2 , 9);
+        // ll.printLL();
+        // System.out.println(ll.itrSearch(9));
+        // System.out.println(ll.recSearch(9));
         ll.addFirst(2);
         ll.addFirst(1);
-        ll.addLast(3);
-        ll.addLast(4);
-        ll.addMiddle(2 , 9);
-        ll.printLL();
-        System.out.println(ll.itrSearch(9));
-        System.out.println(ll.recSearch(9));
-              
+        ll.addFirst(1);
+        ll.addFirst(2);
+        System.out.println(ll.isPalindrome());
 
         
     }

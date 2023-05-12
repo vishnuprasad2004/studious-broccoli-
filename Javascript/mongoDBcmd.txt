@@ -1,0 +1,53 @@
+1. cls - clear
+2. show dbs - shows all databases
+3. show collections - shows all collections of enters
+4. use <dataBase-name> - selects that database/switches to selectedd one/creates new one
+5. db.dropDatabase() - drops the database
+6. exit - exits mongosh
+
+7. db.<collection-name>.insertOne({ JSON FORMAT DATA }) - inserts a record/document in the collection
+
+8. db.<collection-name>.insertMany([ { DATA }, { DATA } ... ]) - inserts an array of record/document in the collection
+
+9. db.<collection-name>.find(...) - returns all the records in the collection
+
+10. db.<collection-name>.find(...).limit(N) - only returns N number of records
+
+11. db.<collection-name>.find(...).sort({ key: 1/-1,key: 1/-1}) - sorts the ojects ascending(1) or descending(-1) order wrt keys given
+
+12. db.<collection-name>.find(...).skip() - to skip entries
+
+13. db.<collection-name>.findOne(...) - returns one record
+
+14. db.<collection-name>.countDocuments(...) - return number of documents
+
+15. db.<collection-name>.updateOne({OLD key:value}, { $set: {NEW key:value} }) - updates the old value to new value for the key ##use _id to uniquely change it 
+
+16. db.<collection-name>.replaceOne(...) - deletes the record and replaces
+
+17. db.<collection-name>.deleteOne(...) - deletes the record
+
+18. db.<collection-name>.deleteMany(...) - deletes multiple records
+
+operations => {
+    $not = !
+    $or = ||
+    $and = &&
+    $eq = ==
+    $ne = !=
+    $gt = >
+    $lt = <
+    $gte = >=
+    $lte = <=
+
+    $exists (true/false)
+    $set = update
+    $inc = increment
+    $rename = rename key
+    $unset = remove key-value
+    $push = pushing in array
+    $pull = removing in array
+
+
+
+}

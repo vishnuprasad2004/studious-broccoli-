@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ratatouille !!</title>
+    <style>
+        body {
+            height:100vh;
+            width: 100vw;
+            position:relative;
+            overflow: hidden;
+        }
+        div {
+            position: absolute;
+            border-radius: 50%;
+            height: 100px;
+            width: 100px;
+        }
+        
+    </style>
+</head>
+<body>
+    <script>
+        const colorsCombo1 = ['red','orange','lightgreen','indigo','blue']; // Default
+        const colorsCombo2 = ['#e5243f','#f65c51','#f7b15c','#54c6be','#2f5755']; // muted
+        const colorsCombo3 = ['#ea1953','#f93459','#89045d','#362951','#c48494']; // pinkish blue
+
+        document.body.addEventListener("mousemove",(event)=> {
+            let dot = document.createElement('div');
+
+            let idx = parseInt(Math.random()*5);
+
+            dot.style.backgroundColor = colorsCombo3[idx];
+            dot.style.left = `${event.pageX-50}px`;
+            dot.style.top = `${event.pageY-50}px`;
+            document.body.appendChild(dot);
+            
+        });
+    </script>
+</body>
+</html>

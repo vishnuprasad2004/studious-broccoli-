@@ -1,0 +1,23 @@
+body {
+    height:100vh;
+    width:100vw;
+    margin:0;
+
+}
+.game-container {
+    border-radius: 1rem;
+    padding: 1rem;
+    width: fit-content;
+    height:fit-content;
+    justify-items: center;
+    text-align: center;
+    margin: 30vh auto;
+    box-shadow:0 0 5px #111111;
+}
+#canvas {
+    border:2px solid black;
+    background: url("game-background-sky.png");
+    background-size:cover;
+   
+    overflow: hidden;
+}

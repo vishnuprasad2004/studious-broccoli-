@@ -32,7 +32,14 @@
     <div id="score-board">00</div>
     <canvas id="canvas"></canvas>
     <script>
-       const canvas = document.querySelector('#canvas');
+        class Ball {
+            Ball(x,y,radius) {
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+            }
+        }
+        const canvas = document.querySelector('#canvas');
         const ctx = canvas.getContext("2d");
         canvas.height = window.innerHeight;
         canvas.width = window.innerWidth;
@@ -48,7 +55,7 @@
         let ballCoordinates = [ radius + 100, radius + 100];
         let xVelocity = 100 / FPS;
         let yVelocity = 100 / FPS;
-        let gainCoordinates = [Math.floor(Math.random()*(window.innerWidth-radius)+(0.05*window.innerWidth)), Math.floor(Math.random()*(window.innerHeight-radius)+(0.05*window.innerHeight))];
+        let gainCoordinates = [Math.floor(Math.random()*(window.innerWidth-radius*2)+(0.05*window.innerWidth)), Math.floor(Math.random()*(window.innerHeight-radius*2)+(0.05*window.innerHeight))];
         
         function eventLoop(event) {
             switch(event.key) {
@@ -87,6 +94,16 @@
 
         }
         
+
+        function theyCollided(ballCoordinates,gainCoordinates) {
+            if(gainCoordinates[0]+radius > ballCoordinates[0] && gainCoordinates[0]<=ballCoordinates[0]) {
+                if(gainCoordinates[1]+radius > ballCoordinates[1] && gainCoordinates[1]<=ballCoordinates[1]) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         function loop() {
             ctx.fillStyle = bgColor;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -96,10 +113,10 @@
             ctx.arc(ballCoordinates[0], ballCoordinates[1], radius, 0, Math.PI*2, true);
             ctx.fillStyle = "black";
             ctx.stroke();
-            if((ballCoordinates[0]+radius >= gainCoordinates[0]) && (ballCoordinates[1]+radius >= gainCoordinates[1])) {
+            if(theyCollided(ballCoordinates,gainCoordinates)) {
                 score++;
                 document.querySelector('#score-board').textContent = (score>10)?score:`0${score}`;
-                gainCoordinates = [Math.floor(Math.random()*(window.innerWidth-radius)+(0.05*window.innerWidth)), Math.floor(Math.random()*(window.innerHeight-radius)+(0.05*window.innerHeight))];
+                gainCoordinates = [Math.floor(Math.random()*(window.innerWidth-radius*2)+(0.05*window.innerWidth)), Math.floor(Math.random()*(window.innerHeight-radius*2)+(0.05*window.innerHeight))];
                 return;
 
             }

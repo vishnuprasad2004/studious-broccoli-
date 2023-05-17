@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin:0;
+            overflow: hidden;
+            height:100%;
+            width:100%;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.querySelector('#canvas')
+        const c = canvas.getContext('2d')
+        canvas.width = innerWidth
+        canvas.height = innerHeight
+
+        const mouse = {
+            x: 10,
+            y: 10
+        };
+
+        const colors = ['#2185C5', '#7ECEFD', '#FFF6E5', '#FF7F66']
+
+        // Event Listeners
+        addEventListener('mousemove', (event) => {
+            mouse.x = event.clientX
+            mouse.y = event.clientY
+        })
+
+        addEventListener('resize', () => {
+            canvas.width = innerWidth
+            canvas.height = innerHeight
+            init()
+        })
+
+        // Objects
+        class Circle {
+            constructor(x, y, radius, color) {
+                this.x = x
+                this.y = y
+                this.radius = radius
+                this.color = color
+            }
+
+            draw() {
+                c.beginPath()
+                c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+                c.fillStyle = this.color
+                c.fill()
+                c.closePath()
+            }
+
+            update() {
+                this.draw()
+            }
+        }
+
+        function collided(x1, y1, r1, x2, y2, r2) {
+            let h =Math.sqrt(Math.pow(x2-x1,2) + Math.pow(y2-y1,2));// distance formula
+            if(h <= r1 + r2) {
+                return true;
+            }
+            return false;
+        }
+
+        let circle1,circle2;
+        // Implementation
+        function init() {
+            circle1 = new Circle(300,300,100,'black');
+            circle2 = new Circle(undefined,undefined,20,'red');
+        }
+
+        // Animation Loop
+        function animate() {
+            requestAnimationFrame(animate)
+            c.clearRect(0, 0, canvas.width, canvas.height);
+            
+            circle1.update();
+            circle2.x = mouse.x;
+            circle2.y = mouse.y;
+            if(collided(circle1.x, circle1.y, circle1.radius, circle2.x, circle2.y, circle2.radius)) {
+                circle1.color = 'red';
+            }else {
+                circle1.color = 'black';
+            }
+            circle2.update();
+
+        }
+
+        init()
+        animate()
+    </script>
+</body>
+</html>

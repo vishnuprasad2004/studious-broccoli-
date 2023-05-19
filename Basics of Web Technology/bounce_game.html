@@ -45,7 +45,7 @@
         canvas.width = window.innerWidth;
         const FPS = 30;
         const colors = [];
-        const bgColor = '#00ff00';
+        const bgColor = 'white';
         let score = 0;
 
         ctx.fillStyle = bgColor;
@@ -94,12 +94,13 @@
 
         }
         
+        // function distance(ballCoordinates, gainCoordinates) {
+        //     return Math.sqrt(Math.pow(ballCoordinates[0],2))
+        // }
 
-        function theyCollided(ballCoordinates,gainCoordinates) {
-            if(gainCoordinates[0]+radius > ballCoordinates[0] && gainCoordinates[0]<=ballCoordinates[0]) {
-                if(gainCoordinates[1]+radius > ballCoordinates[1] && gainCoordinates[1]<=ballCoordinates[1]) {
-                    return true;
-                }
+        function theyCollided(ballCoordinates,gainCoordinates, r1, r2) {
+            if(distance(ballCoordinates,gainCoordinates) <= r1+r2) {
+                return true;
             }
             return false;
         }

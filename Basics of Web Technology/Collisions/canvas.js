@@ -42,7 +42,7 @@ class Particle {
         c.beginPath();
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
         c.save();
-        c.globalAlpha = this.opacity;
+        // c.globalAlpha = this.opacity;
         c.fillStyle = this.color;
         c.fill();
         c.restore();
@@ -63,12 +63,12 @@ class Particle {
                 resolveCollision(this,particles[i]);
                 [this.color, particles[i].color] = [particles[i].color, this.color];
             }
-            if(distance(this.x, this.y, mouse.x, mouse.y) < 100) {
-                // console.log("%cCOLLIDED","color:red;");
-                this.opacity = 1;
-            }else {
-                this.opacity = 0;
-            }
+            // if(distance(this.x, this.y, mouse.x, mouse.y) < 100) {
+            //     // console.log("%cCOLLIDED","color:red;");
+            //     this.opacity = 1;
+            // }else {
+            //     this.opacity = 0;
+            // }
         }
         if(this.x-this.radius <= 0 || this.radius+this.x >= canvas.width) {
             this.velocity.x = -this.velocity.x;

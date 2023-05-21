@@ -8,7 +8,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css?family=Poppins');
         :root {
-            --color:blueviolet;
+            --color:#000011;
         }
         body {
             font-family: 'Poppins', sans-serif;
@@ -40,7 +40,7 @@
             padding: 0;
             width: max-content;
             height: fit-content;
-            font-size:20px;
+            font-size:30px;
             color:red;
             filter: drop-shadow(0 0 10px red);
         }
@@ -58,11 +58,15 @@
             color:var(--color);
             
         }
+        img {
+            display:none;
+        }
     </style>
 </head>
 <body>
     <div id="score-board"><span id="score">00</span> <span id="strikes"></span></div>
-    <img src="https://img.freepik.com/premium-vector/pixel-art-coin-money-dolar-icon-8bit-game-white-background_360488-257.jpg?w=740" alt="COIN" width="20" id="coin">
+    <!-- <img src="./pixel-art-coin-money-icon-game.png" alt="COIN" width="20" id="coin">
+    <img src="./bomb-icon-symbol-video-game.png" alt="BOMB" width="150" id="bomb"> -->
     <dialog id="game-over"> 
         <span style="font-size: 30px; color:red;">Game Over</span><br>
         <span>Score:</span><p id="game-over-score"></p>
@@ -77,6 +81,17 @@
         canvas.width = innerWidth
         canvas.height = innerHeight
         let animation;
+
+        // const coinImage = document.getElementById("coin");
+        const coinImage = new Image();
+        coinImage.src = "pixel-art-coin-money-icon-game.png";
+        coinImage.width = 20;
+
+        // const bombImage = document.getElementById("bomb");
+        const bombImage = new Image();
+        bombImage.src = "bomb-icon-symbol-video-game.png";
+        bombImage.width = 5;
+
         let score = 0
         let strikes = 0 
         document.getElementById("close-btn").onclick = () => {
@@ -90,7 +105,9 @@
             y: -100
         };
 
-        const colors = ['#2185C5', '#7ECEFD', '#FFF6E5', '#FF7F66']
+        addEventListener("load",() => {
+            alert("WELCOME TO THE GAME!!! CATCH THE COIN!!")
+        })
 
         // Event Listeners
         addEventListener('mousemove', (event) => {
@@ -107,7 +124,7 @@
 
         // Objects
         class Particle {
-            constructor(x, y, radius, color,strokeColor) {
+            constructor(x, y, radius, color,strokeColor,image) {
                 this.x = x
                 this.y = y
                 this.radius = radius
@@ -118,16 +135,21 @@
                     x : (Math.random() -0.5)* 2 ,
                     y : (Math.random() -0.5) * 2 
                 }
+                this.image = coinImage
             }
 
             draw() {
-                c.beginPath()
-                c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
-                c.fillStyle = this.color
-                c.fill()
-                c.strokeStyle = this.strokeColor
-                c.stroke()
-                c.closePath()
+                if(this.color == "red") {
+                    c.beginPath()
+                    c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+                    c.fillStyle = this.color
+                    c.fill()
+                    c.strokeStyle = this.strokeColor
+                    c.stroke()
+                    c.closePath()
+                } else {
+                    c.drawImage(this.image,this.x,this.y, this.radius, this.radius)
+                }
             }
 
             update(particles) {
@@ -250,7 +272,7 @@ function resolveCollision(particle, otherParticle) {
 
         function collided(x1, y1, r1, x2, y2, r2) {
             let h =Math.sqrt(Math.pow(x2-x1,2) + Math.pow(y2-y1,2));// distance formula
-            if(h <= r1 + r2) {
+            if(h < r1 + r2) {
                 return true;
             }
             return false;
@@ -259,14 +281,14 @@ function resolveCollision(particle, otherParticle) {
         let player,particles = [];
         // Implementation
         function init() {
-            player = new Player(undefined, undefined,20,'black');
+            player = new Player(undefined, undefined,20,'white');
             // good partilces
             for(let i=0; i<10; i++) {
-                particles.push( new Particle(Math.random()*canvas.width, Math.random()*canvas.height, 10,'#FFD700'));
+                particles.push( new Particle(Math.random()*canvas.width, Math.random()*canvas.height, 22,'#FFD700', coinImage));
             }
             // bad particles
             for(let i=0; i<40; i++) {
-                particles.push( new Particle(Math.random()*canvas.width, Math.random()*canvas.height, 5,'red'));
+                particles.push( new Particle(Math.random()*canvas.width, Math.random()*canvas.height,5,'red',""));
             }
         }
 
@@ -275,7 +297,7 @@ function resolveCollision(particle, otherParticle) {
             animation = requestAnimationFrame(animate)
             // c.clearRect(0, 0, canvas.width, canvas.height);
             c.rect(0,0,canvas.width,canvas.height);
-            c.fillStyle = '#ffffff33'
+            c.fillStyle = '#00001122'
             c.fill();
             
             player.update();

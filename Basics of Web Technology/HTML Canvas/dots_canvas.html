@@ -10,6 +10,7 @@
             margin:0;
             height: 100%;
             width: 100%;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -20,6 +21,10 @@
         const colorsCombo2 = ['#e5243f','#f65c51','#f7b15c','#54c6be','#2f5755']; // muted
         const colorsCombo3 = ['#ea1953','#f93459','#89045d','#362951','#c48494']; // pinkish blue
         
+        addEventListener("resize",() => {
+            canvas.height = window.innerHeight;
+            canvas.width = window.innerWidth;    
+        }) 
         const canvas = document.querySelector('#canvas');
         const ctx = canvas.getContext("2d");
         canvas.height = window.innerHeight;

@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Egg Catches You!!</title>
     <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins');
+        :root {
+            --color:blueviolet;
+        }
         body {
+            font-family: 'Poppins', sans-serif;
             margin:0;
             overflow: hidden;
             height:100%;
@@ -23,17 +28,62 @@
             border-radius: 0.5rem;
             font-family: 'Poppins',sans-serif;
         }
+        #game-over {
+            text-align: center;
+            border-radius: .5rem;
+            z-index: 1;
+            border: none;
+            box-shadow: 0 0 5px #000000aa;
+            padding: 2rem 5rem;
+        }
+        #strikes {
+            padding: 0;
+            width: max-content;
+            height: fit-content;
+            font-size:20px;
+            color:red;
+            filter: drop-shadow(0 0 10px red);
+        }
+        button {
+            background-color:var(--color);
+            color: white;
+            border-radius: 0.2rem;
+            padding: 0.5rem;
+            border: 2px solid transparent;
+            margin: auto;
+        }
+        button:hover {
+            border: 2px solid var(--color);
+            background-color: transparent;
+            color:var(--color);
+            
+        }
     </style>
 </head>
 <body>
-    <div id="score-board">00</div>
+    <div id="score-board"><span id="score">00</span> <span id="strikes"></span></div>
+    <img src="https://img.freepik.com/premium-vector/pixel-art-coin-money-dolar-icon-8bit-game-white-background_360488-257.jpg?w=740" alt="COIN" width="20" id="coin">
+    <dialog id="game-over"> 
+        <span style="font-size: 30px; color:red;">Game Over</span><br>
+        <span>Score:</span><p id="game-over-score"></p>
+        <button id="close-btn">Restart</button>
+    </dialog>
+    <!--CANVAS BOARD-->
     <canvas id="canvas"></canvas>
     <script>
+        const popup = document.getElementById("game-over"); 
         const canvas = document.querySelector('#canvas')
         const c = canvas.getContext('2d')
         canvas.width = innerWidth
         canvas.height = innerHeight
+        let animation;
         let score = 0
+        let strikes = 0 
+        document.getElementById("close-btn").onclick = () => {
+            document.getElementById("strikes").textContent = '';
+            animate()
+            popup.close()
+        }
 
         const mouse = {
             x: -100,
@@ -48,11 +98,12 @@
             mouse.y = event.clientY
         })
 
-        addEventListener('resize', () => {
-            canvas.width = innerWidth
-            canvas.height = innerHeight
-            init()
-        })
+        // addEventListener('resize', () => {
+        //     canvas.width = innerWidth
+        //     canvas.height = innerHeight
+        //     init()
+        //      animate()
+        // })
 
         // Objects
         class Particle {
@@ -90,12 +141,24 @@
                 }
             
                 if(collided(player.x, player.y, player.radius, this.x, this.y, this.radius)) {
+                    // STRIKES
                     if(this.color == 'red') {
-                        score--;
+                        strikes++;
+                        document.getElementById("strikes").textContent += '⨯';
+                        // GAME OVER
+                        if(strikes >= 5) {
+                            popup.showModal();
+                            document.getElementById("game-over-score").textContent = score;
+                            score = 0
+                            strikes = 0
+                            window.cancelAnimationFrame(animation)
+                            
+                        }
+                    // POINTS 
                     }else{
                         score++;
                     }
-                    document.querySelector('#score-board').textContent = (score>=10)?score:`0${score}`;
+                    document.querySelector('#score').textContent = (score>=10)?score:`0${score}`;
                     this.x = Math.random() * canvas.width; 
                     this.y = Math.random() * canvas.height;
                 }
@@ -209,7 +272,7 @@ function resolveCollision(particle, otherParticle) {
 
         // Animation Loop
         function animate() {
-            requestAnimationFrame(animate)
+            animation = requestAnimationFrame(animate)
             // c.clearRect(0, 0, canvas.width, canvas.height);
             c.rect(0,0,canvas.width,canvas.height);
             c.fillStyle = '#ffffff33'

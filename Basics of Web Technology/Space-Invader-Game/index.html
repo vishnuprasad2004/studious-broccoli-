@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body, html {
+            margin:0;
+            height:100%;
+            overflow: hidden;
+            width: 100%;
+            font-family: monospace;
+        }
+        #intro {
+            color:aliceblue;
+            background-color: #34343400;
+            border:none;
+            text-align: center;
+        }
+        button {
+            font-family: monospace;
+            background-color: transparent;
+            color:aliceblue;
+            border:none;
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 15px;
+        }
+        .keys {
+            background-color: rgb(51, 51, 51);
+            border:2px solid #5d5d5d;
+            margin-left: 2px;
+            margin-right: 2px;
+        }
+        p {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <dialog id="intro">
+        <img src="./title-image.png" alt="SPACE INVADERS GAME"><br><br>
+        <div>
+            <p>Press<span class="keys"> &RightArrow; </span> to move Right</p><br>
+            <p>Press<span class="keys"> &LeftArrow; </span> to move Left</p><br>
+            <p>Press<span class="keys"> Space Bar </span> to Shoot </p><br><br>
+        </div>
+        <button id="press-to-continue">press to continue</button>
+    </dialog>
+    <canvas id="canvas"></canvas>
+    <script src="script.js"></script>
+</body>
+</html>

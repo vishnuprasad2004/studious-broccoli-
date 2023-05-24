@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drum Beat Game</title>
+    <style>
+        :root {
+            --width:500px;
+            --height:500px;
+            --bgColor:rgb(11, 11, 11);
+        }
+        body {
+            margin:0;
+            background-color:var(--bgColor);
+            text-align: center;
+            width:100vw;
+            height:100vh;
+            overflow: hidden;
+
+        }
+        .game-container {
+            /* position: relative; */
+            margin: auto auto;
+            /* margin-top:calc(50% - var(-height)); */
+            margin-top:100px;
+            height: var(--height);
+            width: var(--width);
+            gap:20px;
+            display:grid;
+            grid-template-columns: repeat(2, 1fr);
+            text-align: center;
+        }
+        button {
+            cursor: pointer;
+            border-radius:10%;
+        }
+        #red {
+            border-top-left-radius: 100%;
+            background-color: red;
+        }
+        #red:active {
+            background-color: rgb(190, 0, 0);
+        }
+        #green {
+            border-bottom-right-radius: 100%;
+            background-color: rgb(0, 178, 0);
+        }
+        #green:active {
+            background-color: rgb(0, 134, 0);
+        }
+        #yellow {
+            border-bottom-left-radius: 100%;
+            background-color: yellow;
+        }
+        #yellow:active {
+            background-color: rgb(171, 171, 0);
+        }
+        #blue{
+            border-top-right-radius: 100%;
+            background-color: blue;
+        }
+        #blue:active {
+            background-color: rgb(0, 0, 167);
+        }
+        /* #violet{
+            height: calc(var(--height)/2 * 0.95);
+            width: calc(var(--width)/2 * 0.95);
+            background-color: rgb(205, 0, 205);
+            border-radius: 50%;
+            position: absolute;
+            top:calc(var(--height)/2 * 0.5);
+            left:calc(var(--width)/2 * 1.05);
+            box-shadow: 0 0 0 20px var(--bgColor);
+        }
+        #violet:active {
+            background-color: rgb(136, 0, 136);
+        } */
+    </style>
+</head>
+<body>
+    <dialog id="intro">
+        <h2>Welcome to the Game</h2>
+    </dialog>
+    <dialog id="game-over">
+        <h2>Game Over</h2>
+    </dialog>
+    <div class="game-container">
+        <button id="red"></button>
+        <button id="blue"></button>
+        <button id="yellow"></button>
+        <button id="green"></button>
+    </div>
+    <!-- <button id="violet"></button> -->
+    <script src="script.js"></script>
+</body>
+</html>

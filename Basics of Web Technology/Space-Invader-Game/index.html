@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Space Invader Game</title>
+    <link rel="icon" href="./img/spaceship-player.png">
     <style>
         body, html {
             margin:0;
@@ -13,7 +14,7 @@
             width: 100%;
             font-family: monospace;
         }
-        #intro {
+        dialog {
             color:aliceblue;
             background-color: #34343400;
             border:none;
@@ -38,17 +39,31 @@
             margin-top: 0;
             margin-bottom: 0;
         }
+        #game-over-text {
+            color:red;
+            font-size: 100px;
+            filter: brightness(10) drop-shadow(0 0 7px red);
+            transform:rotateX(30deg);
+        }
+        input[type=checkbox] {
+            accent-color: blueviolet;
+        }
     </style>
 </head>
 <body>
     <dialog id="intro">
-        <img src="./title-image.png" alt="SPACE INVADERS GAME"><br><br>
+        <img src="./img/title-image.png" alt="SPACE INVADERS GAME"><br><br>
         <div>
             <p>Press<span class="keys"> &RightArrow; </span> to move Right</p><br>
             <p>Press<span class="keys"> &LeftArrow; </span> to move Left</p><br>
             <p>Press<span class="keys"> Space Bar </span> to Shoot </p><br><br>
         </div>
+        <input type="checkbox" name="mute" id="mute">&nbsp;Mute<br><br>
         <button id="press-to-continue">press to continue</button>
+    </dialog>
+    <dialog id="game-over">
+        <h1 id="game-over-text">GAME OVER</h1>
+        <button id="restart">Restart</button>
     </dialog>
     <canvas id="canvas"></canvas>
     <script src="script.js"></script>

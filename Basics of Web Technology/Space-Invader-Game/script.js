@@ -1,27 +1,40 @@
+/*
+  FUTURE IMPROVEMENTS NOTES
+    > add explosion animation when game over
+    > clean the code
+    > add nav bar & setting
+
+ */
+
+
+
+
+
+
+
+
 //Default Declarations
 const canvas = document.querySelector('#canvas')
 const c = canvas.getContext('2d')
 const intro = document.querySelector('#intro');
+const gameOver = document.getElementById("game-over")
 canvas.width = innerWidth
 canvas.height = innerHeight
 const mouse = {
     x: innerWidth / 2,
     y: innerHeight / 2
 }
-let animation;
-// Intro
-// document.body.onload = () => {
-//     intro.showModal()
-// }
-// document.getElementById("press-to-continue").onclick = () => {
-//     intro.close()
-// }
 
 //Constant / Declarations
 const bgColor = '#000011'
 const scale = 0.15
 const playerSpeed = 4
 const gap = 20
+let animation; 
+let score = 0
+let storedHighscore  = localStorage.getItem('highScore') || 0
+let highscore = storedHighscore
+// let exploded = false
 let keys = {
     ArrowLeft: {
         pressed : false
@@ -81,12 +94,27 @@ addEventListener("keyup",({ key }) => {
 
 })
 
+document.getElementById("mute").addEventListener('click',() => {
+    if(document.getElementById("mute").checked) {
+        music.pause()
+    } else {
+        music.play()
+    }
+})
+
 
 // Assets
 const playerImage = new Image()
-playerImage.src = './spaceship-player.png'
+playerImage.src = './img/spaceship-player.png'
 const invaderImage = new Image()
-invaderImage.src = './space-invader.png'
+invaderImage.src = './img/space-invader.png'
+const music = new Audio('./background-music.mp3')
+music.autoplay = true
+
+// const explosions = [new Image(), new Image(), new Image(), new Image(), new Image(), new Image()]
+// for(let i=1;i<=explosions.length;i++) {
+//     explosions[i-1].src = `./img/explosion${i}.png`;
+// }
 
 
 // Classes
@@ -102,7 +130,7 @@ class Player {
             this.image = playerImage
             this.position = {
                 x: canvas.width/2 - this.width/2,
-                y: canvas.height - this.height - 30
+                y: canvas.height - this.height - 50
             }
         }
         this.rotation = 0
@@ -117,12 +145,31 @@ class Player {
         c.restore()
     }
 
+    // explosion() {
+        
+    //     let exTimer = setInterval(() => {
+    //         let i = 1 
+    //         let explosionImage = new Image()
+    //         explosionImage.src = `./img/explosion${i++}.png`
+    //         if(explosionImage) {
+    //             c.drawImage(explosionImage, this.position.x, this.position.y, this.width, this.height)
+    //         }else{
+    //             c.fillText('OUT',this.position.x,this.position.y)
+    //         }
+    //     },0.5)
+    // }
+
     update() {
         if(playerImage) {
-            this.position.x += this.velocity.x   
+            this.position.x += this.velocity.x 
+            // if(exploded) {
+            //     this.explosion()
+            // }else{
+            // }  
             this.draw()
         }
     }
+
 }
 
 class Invader {
@@ -267,14 +314,14 @@ class InvaderProjectile {
             x:0,
             y:5
         }
-        this.height = 3
-        this.width = 3
+        this.height = 4
+        this.width = 4
     }
 
     draw() {
         c.beginPath()
         c.rect(this.position.x, this.position.y, this.width, this.height)
-        c.fillStyle = 'white'
+        c.fillStyle = 'yellow'
         c.fill()
         c.closePath()
     }
@@ -287,13 +334,62 @@ class InvaderProjectile {
 
 }
 
+class Star {
+    constructor() {
+        this.position = {
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height 
+        }
+        this.velocity = {
+            x:0,
+            y:2
+        }
+        this.radius = Math.random() * 2 
+    }
+
+    draw() {
+        c.beginPath()
+        c.arc(this.position.x, this.position.y, this.radius,0,Math.PI * 2)
+        c.fillStyle = '#ffffffaa'
+        c.fill()
+        c.closePath() 
+    }
+
+    update() {
+        if(this.position.y > canvas.height) {
+            this.position.y = Math.random() * canvas.height - 100
+        }
+        this.position.x += this.velocity.x
+        this.position.y += this.velocity.y
+        this.draw()
+    }
+}
+
 // Implementation
+function init() {
+   player = new Player()
+   projectiles = []
+   grids = []
+   frames = 0
+   invaderProjectiles = []
+   stars = [] 
+
+}
 let player = new Player()
 let projectiles = []
 let grids = []
 let invaderProjectiles = []
 let frames = 0
+let explosion = 0
 let randomInterval = Math.floor(Math.random()*500 + 500)
+let stars = []
+for(let i=0;i<50;i++) {
+    stars.push(new Star())
+}
+
+c.rect(0, 0,canvas.width, canvas.height)
+c.fillStyle = bgColor
+c.fill()
 
 
 // Animation Loop
@@ -303,7 +399,14 @@ function animate() {
     c.rect(0, 0, canvas.width, canvas.height)
     c.fillStyle = bgColor;
     c.fill()
+    // score text update
+    c.fillStyle = 'white'
+    c.font = "bold 20px monospace";
+    c.fillText(`Score:${score}  High Score:${highscore}`,5,20);
     player.update()
+    stars.forEach(star => {
+        star.update()
+    })
     projectiles.forEach((projectile,i) => {
         projectile.update()
         if(projectile.position.y < 0) {
@@ -314,10 +417,26 @@ function animate() {
     })
     invaderProjectiles.forEach(invaderProjectile => {
         invaderProjectile.update()
-        // WRITE THIS TOMORROW + DOCUMENTATION
-        // if(invaderProjectile.position.x) {
-
-        // }
+        if(invaderProjectile.position.x <= player.position.x + player.width && invaderProjectile.position.x >= player.position.x && invaderProjectile.position.y >= player.position.y && invaderProjectile.position.y <= player.position.y + player.height) {
+            // game over
+            console.log("%cOUT",'color:red;')
+            gameOver.showModal();
+            cancelAnimationFrame(animation)
+            setTimeout(()=>{
+                c.rect(0, 0, canvas.width, canvas.height)
+                c.fillStyle = bgColor
+                c.fill()
+                stars.forEach(star => {
+                    star.draw()
+                })
+                
+            },0)
+            highscore = (highscore > score) ? highscore : score
+            localStorage.setItem('highScore',highscore)
+            // exploded = true
+            // player.image = explosions[explosion]
+            score = 0
+        }
     })
     grids.forEach(grid => {
 
@@ -342,6 +461,7 @@ function animate() {
                             projectiles.splice(j,1);
                         }
                     },0)
+                    score += 100
                 }
             })
         })
@@ -361,11 +481,42 @@ function animate() {
     if(frames % randomInterval === 0) {
         grids.push(new Grid());
     }
-
+    if(frames % 10 === 0) {
+        explosion++
+    }
 
     frames++;
 }
 
-animate()
+// animate()
 
-
+// intro
+document.body.onload = function() {
+    intro.showModal()
+    music.play()
+    if(document.getElementById("mute").checked) {
+        music.pause()
+    } else {
+        music.play()
+    }
+}
+document.getElementById("press-to-continue").onclick = function() {
+    intro.close()
+    animate()
+}
+// restart code
+document.getElementById("restart").onclick = function() {
+    gameOver.close()
+    player = new Player()
+    projectiles = []
+    grids = []
+    frames = 0
+    invaderProjectiles = []
+    stars = [] 
+    for(let i=0;i<50;i++) {
+        stars.push(new Star())
+    }
+ 
+    animate()
+}
+ 

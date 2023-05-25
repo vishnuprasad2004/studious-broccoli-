@@ -38,31 +38,38 @@
         }
         #red {
             border-top-left-radius: 100%;
-            background-color: red;
+            background: radial-gradient(red, rgb(169, 0, 0));
         }
         #red:active {
             background-color: rgb(190, 0, 0);
+            filter:drop-shadow(0 0 10px red) brightness(1.5);
         }
         #green {
             border-bottom-right-radius: 100%;
-            background-color: rgb(0, 178, 0);
+            background: radial-gradient(rgb(0, 178, 0), rgb(0, 113, 0));
         }
         #green:active {
             background-color: rgb(0, 134, 0);
+            filter:drop-shadow(0 0 10px rgb(0, 178, 0)) brightness(1.5);
         }
         #yellow {
             border-bottom-left-radius: 100%;
-            background-color: yellow;
+            background: radial-gradient(yellow, rgb(172, 172, 0));
         }
         #yellow:active {
             background-color: rgb(171, 171, 0);
+            filter:drop-shadow(0 0 10px yellow) brightness(1.5);
         }
         #blue{
             border-top-right-radius: 100%;
-            background-color: blue;
+            background: radial-gradient(blue, rgb(0, 0, 189));
         }
         #blue:active {
             background-color: rgb(0, 0, 167);
+            filter:drop-shadow(0 0 10px blue) brightness(1.5);
+        }
+        .bright {
+            filter:brightness(1.5)
         }
         /* #violet{
             height: calc(var(--height)/2 * 0.95);

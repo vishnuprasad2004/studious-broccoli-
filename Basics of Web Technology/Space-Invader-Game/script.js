@@ -2,7 +2,7 @@
   FUTURE IMPROVEMENTS NOTES
     > add explosion animation when game over
     > clean the code
-    > add nav bar & setting
+    > difficulty
 
  */
 
@@ -18,6 +18,7 @@ const canvas = document.querySelector('#canvas')
 const c = canvas.getContext('2d')
 const intro = document.querySelector('#intro');
 const gameOver = document.getElementById("game-over")
+const difficultyRadioBtns = document.querySelectorAll('radio')
 canvas.width = innerWidth
 canvas.height = innerHeight
 const mouse = {
@@ -32,6 +33,7 @@ const playerSpeed = 4
 const gap = 20
 let animation; 
 let score = 0
+let difficulty
 let storedHighscore  = localStorage.getItem('highScore') || 0
 let highscore = storedHighscore
 // let exploded = false
@@ -94,12 +96,23 @@ addEventListener("keyup",({ key }) => {
 
 })
 
-document.getElementById("mute").addEventListener('click',() => {
-    if(document.getElementById("mute").checked) {
-        music.pause()
+// setting eventListeners
+document.getElementById("mute-controls").addEventListener("click",() => {
+    if(document.getElementById("mute-controls").checked) {
+        music.muted = true
     } else {
-        music.play()
-    }
+        music.muted = false
+    }  
+})
+
+document.getElementById("pause").addEventListener("click",() => {
+    if(document.getElementById("pause").checked) {
+        cancelAnimationFrame(animation)
+        music.muted = true 
+    } else {
+        music.muted = false 
+        animate()
+    }  
 })
 
 
@@ -110,6 +123,7 @@ const invaderImage = new Image()
 invaderImage.src = './img/space-invader.png'
 const music = new Audio('./background-music.mp3')
 music.autoplay = true
+
 
 // const explosions = [new Image(), new Image(), new Image(), new Image(), new Image(), new Image()]
 // for(let i=1;i<=explosions.length;i++) {
@@ -395,18 +409,20 @@ c.fill()
 // Animation Loop
 function animate() {
     animation = requestAnimationFrame(animate)
-    // c.clearRect(0, 0, canvas.width, canvas.height)
     c.rect(0, 0, canvas.width, canvas.height)
     c.fillStyle = bgColor;
     c.fill()
     // score text update
     c.fillStyle = 'white'
     c.font = "bold 20px monospace";
-    c.fillText(`Score:${score}  High Score:${highscore}`,5,20);
+    c.fillText(`Score:${score}  High Score:${highscore}`,5,canvas.height-25);
+
     player.update()
+    
     stars.forEach(star => {
         star.update()
     })
+    
     projectiles.forEach((projectile,i) => {
         projectile.update()
         if(projectile.position.y < 0) {
@@ -415,6 +431,7 @@ function animate() {
             },0)
         }
     })
+    
     invaderProjectiles.forEach(invaderProjectile => {
         invaderProjectile.update()
         if(invaderProjectile.position.x <= player.position.x + player.width && invaderProjectile.position.x >= player.position.x && invaderProjectile.position.y >= player.position.y && invaderProjectile.position.y <= player.position.y + player.height) {
@@ -438,29 +455,35 @@ function animate() {
             score = 0
         }
     })
+    
     grids.forEach(grid => {
 
         grid.update()
+        // randomly shooting projectiles by invaders
         if(frames % 100 === 0 && grid.invaders.length > 0) {
             grid.invaders[Math.floor(Math.random()*grid.invaders.length)].shoot(invaderProjectiles)
         }
+        // updating position of invaders according to grid
         grid.invaders.forEach((invader,i) => {
             invader.update({
                 x: grid.velocity.x,
                 y: grid.velocity.y
             })
             projectiles.forEach((projectile,j) => {
+                // checking for collision between invader and player projectile
                 if(projectile.position.y-projectile.radius <= invader.position.y + invader.height && projectile.position.x + projectile.radius >= invader.position.x && projectile.position.x - projectile.radius <= invader.position.x + invader.width && projectile.position.y + projectile.radius >= invader.position.y) {
-                    
+                    // setTimeout for removing it in the next frame and avoiding flashes
                     setTimeout(() => {
+                        // doing this to ensure that the invader and projectile are in the lists
                         let invaderFound = grid.invaders.find(invader2 => invader2 === invader)
                         let projectileFound = projectiles.find(projectile2 => projectile2 === projectile)
-                        // console.log(projectileFound);
+                        // if found eliminating both
                         if(invaderFound && projectileFound) {
                             grid.invaders.splice(i,1);
                             projectiles.splice(j,1);
                         }
                     },0)
+                    // increasing score
                     score += 100
                 }
             })
@@ -478,6 +501,7 @@ function animate() {
         player.rotation = 0
         player.velocity.x = 0
     }
+    // randomly adding more grids
     if(frames % randomInterval === 0) {
         grids.push(new Grid());
     }
@@ -493,19 +517,22 @@ function animate() {
 // intro
 document.body.onload = function() {
     intro.showModal()
-    music.play()
-    if(document.getElementById("mute").checked) {
-        music.pause()
-    } else {
-        music.play()
+    for(let i=0;i<difficultyRadioBtns.length;i++) {
+        console.log(difficultyRadioBtns[i].value)
+        if(difficultyRadioBtns[i].checked) {
+            difficulty = difficultyRadioBtns[i].value || 100
+        }
     }
+    music.play()
 }
 document.getElementById("press-to-continue").onclick = function() {
     intro.close()
+    // console.log(difficulty.value)
     animate()
 }
 // restart code
 document.getElementById("restart").onclick = function() {
+    // reinitialising all variables
     gameOver.close()
     player = new Player()
     projectiles = []
@@ -516,7 +543,7 @@ document.getElementById("restart").onclick = function() {
     for(let i=0;i<50;i++) {
         stars.push(new Star())
     }
- 
+    document.getElementById('pause').checked = false
     animate()
 }
  

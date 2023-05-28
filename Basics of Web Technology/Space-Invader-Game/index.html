@@ -13,6 +13,7 @@
             overflow: hidden;
             width: 100%;
             font-family: monospace;
+            color:aliceblue;
         }
         dialog {
             color:aliceblue;
@@ -40,17 +41,27 @@
             margin-bottom: 0;
         }
         #game-over-text {
-            color:red;
+            margin: 0;
+            color:rgb(255, 0, 0);
             font-size: 100px;
-            filter: brightness(10) drop-shadow(0 0 7px red);
+            filter: brightness(1.5) drop-shadow(0 0 7px rgb(255, 31, 31));
             transform:rotateX(30deg);
         }
-        input[type=checkbox] {
+        input[type=radio] {
             accent-color: blueviolet;
+        }
+        #controls {
+            position: absolute;
+            bottom:10px;
+            right:10px;
         }
     </style>
 </head>
 <body>
+    <div id="controls">
+        <input type="checkbox" id="mute-controls"><span>&nbsp;Mute&nbsp;</span>
+        <input type="checkbox" id="pause"><span>&nbsp;Pause&nbsp;</span>
+    </div>
     <dialog id="intro">
         <img src="./img/title-image.png" alt="SPACE INVADERS GAME"><br><br>
         <div>
@@ -58,7 +69,10 @@
             <p>Press<span class="keys"> &LeftArrow; </span> to move Left</p><br>
             <p>Press<span class="keys"> Space Bar </span> to Shoot </p><br><br>
         </div>
-        <input type="checkbox" name="mute" id="mute">&nbsp;Mute<br><br>
+        <input type="radio" name="difficulty" id="easy" value="750">&nbsp;Easy&nbsp; 
+        <input type="radio" name="difficulty" id="medium" value="500">&nbsp;Medium&nbsp;
+        <input type="radio" name="difficulty" id="difficult" value="250">&nbsp;Difficult&nbsp;
+        <br><br>
         <button id="press-to-continue">press to continue</button>
     </dialog>
     <dialog id="game-over">

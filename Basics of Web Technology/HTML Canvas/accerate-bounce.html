@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            overflow: hidden;
+            margin: 0;
+            height:100vh;
+            width:100vw;
+            top:0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas")
+        const c = canvas.getContext('2d')
+        canvas.width = innerWidth
+        canvas.height = innerHeight
+        let acceleration = 1
+        let retardation = 0.99
+        const colorsCombo2 = ['#e5243f','#f65c51','#f7b15c','#54c6be','#2f5755']
+        class Ball {
+            constructor() {
+                this.position = {
+                    x:Math.floor(Math.random() * (canvas.width)),
+                    y:Math.floor(Math.random() * (canvas.height) - 0.1*canvas.height)
+                }
+                this.velocity = {
+                    x:5,
+                    y:10
+                }
+                this.radius = Math.floor(Math.random() * 40 + 10)
+                this.color = colorsCombo2[Math.floor(Math.random()*colorsCombo2.length)]
+                this.mass = 1
+            }
+            draw() {
+                c.beginPath()
+                c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2, true)
+                c.fillStyle = this.color
+                c.strokeStyle = '#111111'
+                c.fill()
+                c.stroke()
+                c.closePath()
+            }
+            update() {
+                if(this.position.y + this.radius + this.velocity.y > canvas.height /*|| this.position.y - this.radius < 0*/) {
+                    this.velocity.y = -Math.floor(this.velocity.y * retardation) 
+                }else {
+                    this.velocity.y += acceleration
+                }
+                if(this.position.x + this.radius + this.velocity.x > canvas.width || this.position.x - this.radius < 0) {
+                    this.velocity.x = -this.velocity.x
+                }
+                
+                this.position.x += this.velocity.x
+                this.position.y += Math.floor(this.velocity.y)
+                this.draw()
+            }
+
+        }
+        let balls = []
+        for(let i=0;i<10;i++) {
+            balls.push(new Ball())
+        } 
+        // you can edit these values
+        // balls[0].position.x = 100
+        // balls[0].position.y = canvas.height-100
+        // balls[0].velocity.y = -30
+        // balls[0].velocity.x = 5
+        //these ↑
+        function animate() {
+            requestAnimationFrame(animate)
+            c.rect(0, 0, canvas.width, canvas.height)
+            c.fillStyle = '#000000'
+            c.fill()
+            balls.forEach(ball => {
+                ball.update()
+            })
+        }
+        animate()
+    </script>
+</body>
+</html>

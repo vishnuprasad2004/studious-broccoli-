@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            overflow: hidden;
+            margin: 0;
+            height:100vh;
+            width:100vw;
+            top:0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas")
+        const c = canvas.getContext('2d')
+        canvas.width = innerWidth
+        canvas.height = innerHeight
+        let mouse = {
+            x:undefined,
+            y:undefined
+        }
+        window.addEventListener('mousemove',(event) => {
+            mouse.x = event.clientX
+            mouse.y = event.clientY
+        }) 
+        c.beginPath()
+        function recursion() {
+            c.moveTo(300,0)
+            c.lineTo(300,100)
+            c.closePath()
+        }
+        c.beginPath()
+        function animate() {
+            requestAnimationFrame(animate)
+            c.clearRect(0, 0, canvas.width, canvas.height)
+            c.fillStyle = '#ffffff11'
+            c.fill()
+            c.lineTo(mouse.x,mouse.y)
+            // c.strokeStyle = 'red'
+            c.stroke()
+            recursion()
+        }
+        animate()
+    </script>
+</body>
+</html>

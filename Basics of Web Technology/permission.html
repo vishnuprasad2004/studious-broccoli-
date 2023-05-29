@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permission</title>
+    <script src="https://kit.fontawesome.com/9fa8e6aacd.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+        video {
+            width:100vw;
+        }
+        #control-panel {
+            position: absolute;
+            padding: 0.5rem;
+            z-index: 1;
+            background-color: rgb(59, 59, 72);
+            bottom:0;
+            left:0;
+            width:100vw;
+            height:50px;
+            text-align: center;
+        }
+        button {
+            background-color: rgb(255, 0, 0);
+            border-radius: 50%;
+            aspect-ratio: 1/1;
+            border:none;
+            height:45px;
+            margin-left: 40px;
+        }
+    </style>
+</head>
+<body>
+    
+    <video id="video" autoplay muted></video>
+    <div id="control-panel">
+        <button id="mute"><i id='mute-icon' class="fa-solid fa-microphone"></i></i></button>
+        <button id="cam-off"><i id="cam-off-icon" class="fa-solid fa-video-slash"></i></button>
+    </div>
+    <script>
+        const video = document.getElementById("video")
+        document.getElementById('mute').onclick = () => {
+            if(document.getElementById('mute').style.backgroundColor == 'red') {
+                document.getElementById('mute').style.backgroundColor = 'lightgreen'
+                video.muted = false
+            }else {
+                document.getElementById('mute').style.backgroundColor = 'red'
+                video.muted = true
+            }
+
+            document.getElementById("mute-icon").classList.toggle('fa-microphone-slash')
+        }
+
+        // Permissions
+        let stream
+        async function getLocalStream() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        width: {min:1024, ideal:innerWidth, max:1920}, //1280
+                        height: {min:576, ideal:innerHeight, max:1080} // 720
+                    },
+                    audio:true
+                })
+                video.srcObject = stream
+                window.stream = stream
+            }catch(e) {
+                console.log(`%c${e}`,'color:green;')
+            }
+             
+        }
+
+        getLocalStream()
+    </script>
+</body>
+</html>

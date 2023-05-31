@@ -1,0 +1,59 @@
+body, html {
+    margin:0;
+    height:100%;
+    overflow: hidden;
+    width: 100%;
+    font-family: monospace;
+    color:aliceblue;
+    background-color: #000011;
+}
+dialog {
+    color:aliceblue;
+    background-color: #34343400;
+    border:none;
+    text-align: center;
+}
+button {
+    font-family: monospace;
+    padding: 0.5rem;
+    border:2px solid transparent;
+    border-radius:0.5rem;
+    cursor: pointer;
+    /* text-decoration: underline; */
+    font-size: 15px;
+    background-color: orangered;
+}
+button:hover {
+    background-color: transparent;
+    border:2px solid orangered;
+    color:aliceblue;
+
+}
+.keys {
+    background-color: rgb(51, 51, 51);
+    border:2px solid #5d5d5d;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+#game-over-text {
+    margin: 0;
+    color:rgb(255, 0, 0);
+    font-size: 100px;
+    filter: brightness(1.5) drop-shadow(0 0 7px rgb(255, 31, 31));
+    transform:rotateX(30deg);
+}
+input[type=radio] {
+    accent-color: orange;
+}
+input[type=checkbox] {
+    accent-color: orange;
+}
+#controls {
+    position: absolute;
+    bottom:10px;
+    right:10px;
+}

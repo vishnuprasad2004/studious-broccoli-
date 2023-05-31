@@ -1,8 +1,10 @@
+
 /*
   FUTURE IMPROVEMENTS NOTES
     > add explosion animation when game over
     > clean the code
-    > difficulty
+    > difficulty - done
+    > immunity when green partilcles are hit by projectiles
 
  */
 
@@ -18,7 +20,8 @@ const canvas = document.querySelector('#canvas')
 const c = canvas.getContext('2d')
 const intro = document.querySelector('#intro');
 const gameOver = document.getElementById("game-over")
-const difficultyRadioBtns = document.querySelectorAll('radio')
+const difficultyRadioBtns = document.getElementsByName('difficulty')
+
 canvas.width = innerWidth
 canvas.height = innerHeight
 const mouse = {
@@ -33,7 +36,7 @@ const playerSpeed = 4
 const gap = 20
 let animation; 
 let score = 0
-let difficulty
+let difficulty = 500
 let storedHighscore  = localStorage.getItem('highScore') || 0
 let highscore = storedHighscore
 // let exploded = false
@@ -95,6 +98,9 @@ addEventListener("keyup",({ key }) => {
     }
 
 })
+addEventListener('resize',() => {
+    location.reload()
+})
 
 // setting eventListeners
 document.getElementById("mute-controls").addEventListener("click",() => {
@@ -117,8 +123,9 @@ document.getElementById("pause").addEventListener("click",() => {
 
 
 // Assets
-const playerImage = new Image()
-playerImage.src = './img/spaceship-player.png'
+// const playerImage = new Image()
+// playerImage.src = './img/spaceship-player.png'
+const playerImage = document.getElementById('player-image')
 const invaderImage = new Image()
 invaderImage.src = './img/space-invader.png'
 const music = new Audio('./background-music.mp3')
@@ -232,7 +239,7 @@ class Grid {
             y:0
         }
         this.rows = Math.floor(Math.random() * 10 + 5)
-        this.cols = Math.floor(Math.random() * 4 + 1)
+        this.cols = Math.floor(Math.random() * 4 + 2)
         this.width =  this.rows * 45 
         this.invaders = []
         for(let i=0; i< this.rows; i++) {
@@ -253,6 +260,9 @@ class Grid {
             this.velocity.x = -this.velocity.x
             randomInterval = Math.floor(Math.random()*500 + 500)
             this.velocity.y = 30
+        }
+        if(this.position.y >= 0.6*canvas.width) {
+            gameOverFunc()
         }
 
         // if(this.invaders[this.rows-1].position.x + invaderImage.width < canvas.width) {
@@ -318,6 +328,35 @@ class Projectile {
         this.draw()
     }
 }
+
+class ImmunityParticles {
+    constructor() {
+        this.position = {
+            x: 20,
+            y: Math.random() * canvas.height/2
+        }
+        this.velocity = {
+            x:Math.random()*2 + 1,
+            y:Math.random()*2 + 1
+        }
+        this.radius = 12
+    }
+
+    draw() {
+        c.beginPath()
+        c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2, true)
+        c.fillStyle = 'lightgreen'
+        c.fill()
+        c.closePath()
+    }
+
+    update() {
+        this.position.x += this.velocity.x
+        this.position.y += this.velocity.y
+        this.draw()
+    }
+}
+
 class InvaderProjectile {
     constructor(position) {
         this.position = {
@@ -328,7 +367,7 @@ class InvaderProjectile {
             x:0,
             y:5
         }
-        this.height = 4
+        this.height = 6
         this.width = 4
     }
 
@@ -349,6 +388,7 @@ class InvaderProjectile {
 }
 
 class Star {
+    static colors = ['#2185C5aa', '#7ECEFDaa', '#FFF6E5aa', '#FF7F66aa'];
     constructor() {
         this.position = {
             x: Math.random() * canvas.width,
@@ -359,12 +399,13 @@ class Star {
             y:2
         }
         this.radius = Math.random() * 2 
+        this.color = Star.colors[Math.floor(Math.random() * Star.colors.length)]
     }
 
     draw() {
         c.beginPath()
         c.arc(this.position.x, this.position.y, this.radius,0,Math.PI * 2)
-        c.fillStyle = '#ffffffaa'
+        c.fillStyle = this.color
         c.fill()
         c.closePath() 
     }
@@ -380,24 +421,46 @@ class Star {
 }
 
 // Implementation
-function init() {
-   player = new Player()
-   projectiles = []
-   grids = []
-   frames = 0
-   invaderProjectiles = []
-   stars = [] 
+// function init() {
+//    player = new Player()
+//    projectiles = []
+//    grids = []
+//    frames = 0
+//    invaderProjectiles = []
+//    stars = [] 
 
+// }
+function gameOverFunc() {
+    console.log("%cOUT",'color:red;')
+    gameOver.showModal();
+    cancelAnimationFrame(animation)
+    setTimeout(()=>{
+        c.rect(0, 0, canvas.width, canvas.height)
+        c.fillStyle = bgColor
+        c.fill()
+        stars.forEach(star => {
+            star.draw()
+        })
+        
+    },0)
+    highscore = (highscore > score) ? highscore : score
+    localStorage.setItem('highScore',highscore)
+    // exploded = true
+    // player.image = explosions[explosion]
+    score = 0
 }
+
 let player = new Player()
 let projectiles = []
 let grids = []
 let invaderProjectiles = []
+let immunityParticles = []
 let frames = 0
 let explosion = 0
-let randomInterval = Math.floor(Math.random()*500 + 500)
+let randomInterval = Math.floor(Math.random()*500 + difficulty)
+let randomInterval2 = Math.floor(Math.random()*500 + 1000) // for immunity 1000 being likely of occurance
 let stars = []
-for(let i=0;i<50;i++) {
+for(let i=0;i<100;i++) {
     stars.push(new Star())
 }
 
@@ -425,34 +488,40 @@ function animate() {
     
     projectiles.forEach((projectile,i) => {
         projectile.update()
+        // if projectiles are off screen then take them out of the array
         if(projectile.position.y < 0) {
             setTimeout(()=>{
                 projectiles.splice(i,1)
             },0)
         }
     })
+    immunityParticles.forEach(particle => {
+        particle.update()
+    })
     
     invaderProjectiles.forEach(invaderProjectile => {
         invaderProjectile.update()
+        // collision of invader's projectile and player
         if(invaderProjectile.position.x <= player.position.x + player.width && invaderProjectile.position.x >= player.position.x && invaderProjectile.position.y >= player.position.y && invaderProjectile.position.y <= player.position.y + player.height) {
             // game over
-            console.log("%cOUT",'color:red;')
-            gameOver.showModal();
-            cancelAnimationFrame(animation)
-            setTimeout(()=>{
-                c.rect(0, 0, canvas.width, canvas.height)
-                c.fillStyle = bgColor
-                c.fill()
-                stars.forEach(star => {
-                    star.draw()
-                })
+            // console.log("%cOUT",'color:red;')
+            // gameOver.showModal();
+            // cancelAnimationFrame(animation)
+            // setTimeout(()=>{
+            //     c.rect(0, 0, canvas.width, canvas.height)
+            //     c.fillStyle = bgColor
+            //     c.fill()
+            //     stars.forEach(star => {
+            //         star.draw()
+            //     })
                 
-            },0)
-            highscore = (highscore > score) ? highscore : score
-            localStorage.setItem('highScore',highscore)
-            // exploded = true
-            // player.image = explosions[explosion]
-            score = 0
+            // },0)
+            // highscore = (highscore > score) ? highscore : score
+            // localStorage.setItem('highScore',highscore)
+            // // exploded = true
+            // // player.image = explosions[explosion]
+            // score = 0
+            gameOverFunc()
         }
     })
     
@@ -505,9 +574,12 @@ function animate() {
     if(frames % randomInterval === 0) {
         grids.push(new Grid());
     }
-    if(frames % 10 === 0) {
-        explosion++
+    if(frames % randomInterval2 === 100) {
+        immunityParticles.push(new ImmunityParticles())
     }
+    // if(frames % 10 === 0) {
+    //     explosion++
+    // }
 
     frames++;
 }
@@ -521,6 +593,7 @@ document.body.onload = function() {
         console.log(difficultyRadioBtns[i].value)
         if(difficultyRadioBtns[i].checked) {
             difficulty = difficultyRadioBtns[i].value || 100
+            break
         }
     }
     music.play()

@@ -6,58 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Invader Game</title>
     <link rel="icon" href="./img/spaceship-player.png">
-    <style>
-        body, html {
-            margin:0;
-            height:100%;
-            overflow: hidden;
-            width: 100%;
-            font-family: monospace;
-            color:aliceblue;
-        }
-        dialog {
-            color:aliceblue;
-            background-color: #34343400;
-            border:none;
-            text-align: center;
-        }
-        button {
-            font-family: monospace;
-            background-color: transparent;
-            color:aliceblue;
-            border:none;
-            cursor: pointer;
-            text-decoration: underline;
-            font-size: 15px;
-        }
-        .keys {
-            background-color: rgb(51, 51, 51);
-            border:2px solid #5d5d5d;
-            margin-left: 2px;
-            margin-right: 2px;
-        }
-        p {
-            margin-top: 0;
-            margin-bottom: 0;
-        }
-        #game-over-text {
-            margin: 0;
-            color:rgb(255, 0, 0);
-            font-size: 100px;
-            filter: brightness(1.5) drop-shadow(0 0 7px rgb(255, 31, 31));
-            transform:rotateX(30deg);
-        }
-        input[type=radio] {
-            accent-color: blueviolet;
-        }
-        #controls {
-            position: absolute;
-            bottom:10px;
-            right:10px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <img src="./img/spaceship-player.png" style="display: none;" id="player-image" alt="Player">
     <div id="controls">
         <input type="checkbox" id="mute-controls"><span>&nbsp;Mute&nbsp;</span>
         <input type="checkbox" id="pause"><span>&nbsp;Pause&nbsp;</span>
@@ -70,8 +22,8 @@
             <p>Press<span class="keys"> Space Bar </span> to Shoot </p><br><br>
         </div>
         <input type="radio" name="difficulty" id="easy" value="750">&nbsp;Easy&nbsp; 
-        <input type="radio" name="difficulty" id="medium" value="500">&nbsp;Medium&nbsp;
-        <input type="radio" name="difficulty" id="difficult" value="250">&nbsp;Difficult&nbsp;
+        <input type="radio" name="difficulty" id="medium" value="500" checked>&nbsp;Medium&nbsp;
+        <input type="radio" name="difficulty" id="difficult" value="100">&nbsp;Difficult&nbsp;
         <br><br>
         <button id="press-to-continue">press to continue</button>
     </dialog>

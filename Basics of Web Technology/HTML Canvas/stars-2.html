@@ -79,16 +79,6 @@
 
                     }
                 }
-                // if(this.position.x < 0) {
-                //     this.position.x -= this.velocity.x
-                // }else {
-                //     this.position.x += this.velocity.x
-                // }
-                // if(this.position.y < 0) {
-                //     this.position.y -= this.velocity.y
-                // }else {
-                //     this.position.y += this.velocity.y
-                // }
                 this.position.x += this.velocity.x
                 this.position.y += this.velocity.y
                 this.draw()
@@ -97,7 +87,6 @@
         let stars = []
         for(let i=0;i<600;i++) {
             stars.push(new Star())
-            // console.log(stars[i].position);
         } 
 
         function distance(x1, y1, x2, y2) {

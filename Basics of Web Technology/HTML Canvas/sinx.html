@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            overflow: hidden;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas')
+        const c = canvas.getContext('2d')
+        const colorsCombo2 = ['#e5243f','#f65c51','#f7b15c','#54c6be','#2f5755']; // muted colors
+        let animation
+        canvas.width = innerWidth
+        canvas.height = innerHeight
+        let mouse = {
+            x: undefined,
+            y: undefined
+        }
+
+        // Event Listeners
+        addEventListener('resize',() => {
+            location.reload()
+        })
+
+        addEventListener('mousemove',(event) => {
+            mouse.x = event.clientX
+            mouse.y = event.clientY
+        })
+
+        // Functions
+        function randomNumRange(min, max) {
+            return Math.floor(Math.random()*(max - min + 1) + min);
+        }
+
+        function distance(x1, y1, x2, y2) {
+            // Distance Formula from Coordinate Geometry
+            return Math.sqrt(Math.pow(x2-x1,2)+ Math.pow(y2-y1,2))
+        }
+
+        
+
+        // Classes
+        class Particle {
+            static radius = 0.005 * canvas.height
+            constructor(position) {
+                this.position = {
+                    x: position.x,
+                    y: position.y
+                }
+                this.velocity = {
+                    x: 2,
+                    y: 0.08 // frequency
+                }
+                this.amplitude = 10         
+                this.radians = 0
+                this.radius = Particle.radius
+                this.color = colorsCombo2[Math.floor(Math.random()*colorsCombo2.length)]
+
+            }
+            draw() {
+                c.beginPath()
+                c.lineTo(this.position.x, this.position.y)
+                // c.moveTo()
+                c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, true)
+                c.fillStyle = this.color
+                c.fill()
+                c.closePath()
+            }
+            updateSine() {
+                if(this.position.x + this.radius >= canvas.width || this.position.x - this.radius <= 0) {
+                    this.velocity.x = -this.velocity.x
+                }
+                this.radians += this.velocity.y
+                this.position.x += this.velocity.x
+                this.position.y += Math.sin(this.radians) * this.amplitude
+                this.draw()
+            }
+            updateCosine() {
+                if(this.position.x + this.radius >= canvas.width || this.position.x - this.radius <= 0) {
+                    this.velocity.x = -this.velocity.x
+                }
+                this.radians += this.velocity.y
+                this.position.x += this.velocity.x
+                this.position.y += Math.cos(this.radians) * this.amplitude
+                this.draw()
+            }
+        }
+
+        // Implementations 
+        let particles = []
+        let particle1 = new Particle({x: 20, y: 200})
+        let particle2 = new Particle({x: 20, y: 500})
+        function animate() {
+            animation = requestAnimationFrame(animate)
+            // c.rect(0, 0, canvas.width, canvas.height)
+            // c.fillStyle = '#ffffff22' // Background Color
+            // c.fill()
+            particle1.updateSine()
+            particle2.updateCosine()
+            particles.forEach(particle => {
+                particle.update()
+            })
+
+        }
+        animate()
+    </script>
+</body>
+</html>

@@ -198,7 +198,7 @@ function resolveGravity(particle, otherParticle) {
         d = 1
     }
     // Newton's Law of Gravitation
-    let f = ( 10 * m1 * m2 ) / Math.pow(d, 2)
+    let f = ( 1 * m1 * m2 ) / Math.pow(d, 2)
     // calculating x and y components of the force
     let fx = f * dx * 0.1
     let fy = f * dy * 0.1
@@ -224,9 +224,10 @@ async function addParticle(x, y) {
 
 // Implementations 
 let particles = []
-particles.push(new Particle({x:canvas.width/2, y:canvas.height/2}, 25, Particle.radius * 30 * 1.5))
+particles.push(new Particle({x:canvas.width/2, y:canvas.height/2}, 35, Particle.radius * 30 * 1.5))
 for(let i=0; i<10; i++) {
-    let mass = Math.random() * 9 + 1
+    // let mass = Math.random() * 9 + 1
+    let mass = 5
     let radius = Particle.radius * mass * 1.5
     let x = randomNumRange(radius*2, canvas.width-radius*2)
     let y = randomNumRange(radius*2, canvas.height-radius*2)
@@ -248,7 +249,7 @@ for(let i=0; i<10; i++) {
 function animate() {
     animation = requestAnimationFrame(animate)
     c.rect(0, 0, canvas.width, canvas.height)
-    c.fillStyle = 'white' // Background Color
+    c.fillStyle = '#ffffff22' // Background Color
     c.fill()
     
     if(mouseDown) {

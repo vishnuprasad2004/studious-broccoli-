@@ -48,7 +48,8 @@
                 this.radius = radius
                 this.color = color
                 this.radians = Math.random() * Math.PI * 2
-                this.velocity = 0.05
+                this.velocity = 0.1
+                this.amplitude = 20
             }
 
             draw() {
@@ -61,8 +62,8 @@
 
             update() {
                 this.radians += this.velocity
-                this.x += Math.cos(this.radians)*1;
-                this.y += Math.sin(this.radians)*1;
+                this.x +=(Math.sin(this.radians)*this.amplitude);
+                this.y += (Math.cos(this.radians)*this.amplitude);
                 this.draw()
             }
         }
@@ -70,19 +71,21 @@
         // Implementation
         let particles = [] 
         function init() {
-            for (let i = 0; i < 10; i++) {
-                particles.push(new Particle(innerWidth/2, innerHeight/2, 5, "black"));
+            for (let i = 0; i < 1; i++) {
+                particles.push(new Particle(mouse.x, mouse.y, 5, "black"));
             }
         }
 
         // Animation Loop
         function animate() {
             requestAnimationFrame(animate)
-            c.clearRect(0, 0, canvas.width, canvas.height)
-            // c.rect(0, 0, canvas.width, canvas.height)
-            // c.fillStyle = "#ffffff12"
-            // c.fill()
+            // c.clearRect(0, 0, canvas.width, canvas.height)
+            c.rect(0, 0, canvas.width, canvas.height)
+            c.fillStyle = "#ffffff12"
+            c.fill()
             particles.forEach(particle => {
+                // particle.x = mouse.x
+                // particle.y = mouse.y
                 particle.update()
             })
         }

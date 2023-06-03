@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins');
+        body {
+            margin: 0;
+            height:100vh;
+            width:100vw;
+            overflow: hidden;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #202122;
+            color:#9aa0a6;
+            display: flex;
+            justify-content: center;
+            /* text-align: center; */
+        }
+        .container {
+            text-align: left;
+            padding: 1rem;
+            width:max-content;
+            /* margin-left:37%; */
+        }
+        h2 {
+            font-weight: 500;
+        }
+        a {
+            text-decoration: none;
+        }
+        #game-over {
+            padding-top: 70px;
+            padding-left: 12px;
+            font-family: 'Poppins','Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: none;
+            width: 400px;
+            height: 270px;
+            position: absolute;
+            text-align: center;
+            vertical-align: middle;
+            
+        }
+        #div-wrapper {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+        button {
+            margin:0;
+            font-family: 'Poppins','Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: transparent;
+            color: #9aa0a6;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            text-decoration: underline;
+        }
+        canvas {
+            background-color: #202122;
+            padding: 0;
+            width: 400px;
+            height: 270px;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="div-wrapper">
+            <div id="canvas-container">
+                <div id="game-over">
+                    <h1>Game Over.</h1>
+                    <button id="restart">Restart</button>
+                </div>
+                <canvas id="canvas"></canvas>
+            </div>
+        </div>
+        <h2>No Internet</h2>
+        <p>Try:</p>
+        <ul>
+            <li>Checking the network cables, modem, and router</li>
+            <li>Reconnecting to Wi-Fi</li>
+            <li><a href="#">Running Windows Network Diagnostics</a></li>
+        </ul>
+        <h6>ERR_INTERNET_DISCONNECTED</h6>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

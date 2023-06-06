@@ -1,3 +1,12 @@
+/*
+    > make player 1 computer based
+    > improve the start of the game
+    > add sound
+ */
+
+
+
+
 const canvas = document.getElementById("canvas");
 const c = canvas.getContext('2d');
 const gameContainer = document.getElementById('game-container')
@@ -27,6 +36,10 @@ let keys = {
 document.getElementById('restart').addEventListener('click',() => {
     location.reload()
 })
+document.getElementById('intro').addEventListener('click',() => {
+    animate()
+    document.getElementById('intro').style.display = 'none'
+})
 
 addEventListener('resize',() => {
     location.reload();
@@ -49,7 +62,7 @@ addEventListener('keydown',({ key }) => {
             break;
         case ' ':
             // keys.space.pressed = true
-            animate()
+            // animate()
     }
 });
 addEventListener('keyup',({ key }) => {
@@ -100,8 +113,9 @@ class Ball {
     constructor() {
         this.x = canvas.width/2
         this.y = canvas.height/2
-        this.vx = 2 
-        this.vy = 2 
+        let directions = [1,-1]
+        this.vx = 2 * directions[Math.floor(Math.random()*directions.length)]
+        this.vy = 2 * directions[Math.floor(Math.random()*directions.length)]
         this.radius = 12
     }
     draw() {
@@ -133,38 +147,13 @@ class Ball {
 function gameOver() {
     cancelAnimationFrame(animation)
     gameover.style.display = 'block';
-    // c.rect(0, 0, canvas.width, canvas.height)
-    // c.fillStyle = '#202122'
-    // c.fill()
 }
 
-
-
-function distance(x1, y1, x2, y2) {
-    // Distance Formula from Coordinate Geometry
-    return Math.sqrt(Math.pow(x2-x1,2)+ Math.pow(y2-y1,2))
-}
-
-
-// Classes
 
 // Implementations 
 let player1 = new Player(2,2)
 let player2 = new Player(canvas.width-14,2)
 let ball = new Ball()
-// c.beginPath()
-// c.moveTo(canvas.width/2,0)
-// c.lineTo(canvas.width/2,canvas.height)
-// c.closePath()
-// for(let i=0;i<10;i++) {
-//     if(i*7) {
-//         c.moveTo(canvas.width/2, i*7)
-//         c.lineTo(canvas.width/2,i*7)
-//         c.strokeStyle ='white'
-//         c.stroke()
-//     }
-// }
-
 
 function animate() {
     animation = requestAnimationFrame(animate)
@@ -194,6 +183,10 @@ function animate() {
         player2.vy = 2
     }else{
         player2.vy = 0
+    }
+    // Computer Generate
+    if(player1) {
+
     }
     
     // Player 1 Collision

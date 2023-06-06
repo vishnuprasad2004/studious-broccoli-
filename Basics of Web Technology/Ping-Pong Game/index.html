@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>github.com</title>
     <style>
         @import url('https://fonts.googleapis.com/css?family=Poppins');
+        @keyframes intro {
+            from {
+                width: 100px;
+                /* height: 270px; */
+                background-color: #202122;
+            }
+            to {
+                width: 400px;
+                /* height: 270px; */
+                background-color: #111111;
+            }
+        }
         body {
             margin: 0;
             height:100vh;
@@ -33,7 +45,7 @@
         }
         #game-over {
             padding-top: 70px;
-            padding-left: 12px;
+            padding-left: 2px;
             font-family: 'Poppins','Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: none;
             width: 400px;
@@ -42,6 +54,17 @@
             text-align: center;
             vertical-align: middle;
             
+        }
+        #intro {
+            padding-top: 70px;
+            padding-left: 2px;
+            font-family: 'Poppins','Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: block;
+            width: 400px;
+            height: 270px;
+            position: absolute;
+            text-align: center;
+            /* animation:intro 1000ms linear; */
         }
         #div-wrapper {
             display: flex;
@@ -60,7 +83,7 @@
             text-decoration: underline;
         }
         canvas {
-            background-color: #202122;
+            background-color: #111111;
             padding: 0;
             width: 400px;
             height: 270px;
@@ -75,6 +98,9 @@
                 <div id="game-over">
                     <h1>Game Over.</h1>
                     <button id="restart">Restart</button>
+                </div>
+                <div id="intro">
+                    <button id="start"><h1>Start.</h1></button>
                 </div>
                 <canvas id="canvas"></canvas>
             </div>

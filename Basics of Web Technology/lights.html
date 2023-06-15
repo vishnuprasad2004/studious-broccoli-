@@ -34,7 +34,7 @@
             border-radius: 50%;
             filter:blur(2px) drop-shadow(0 0 2px #2c2c2c7e);
             backdrop-filter: blur(1px) brightness(3);
-            /* background-color: #d6d6d610;  */
+            background:radial-gradient(10% #6c6c6c47,90% #ffffff00) ; 
         }
     </style>
 </head>
@@ -72,7 +72,7 @@
                 bulb.style.filter = `brightness(1.7) drop-shadow(0 0 6px ${color}) blur(2px)`;
                 setTimeout(() => {
                     bulb.style.filter = `brightness(0.4) blur(1px) opacity(0.8)`;
-                },5000)
+                },10000)
             }
             bulb.setAttribute('class','light');
             lights.push(bulb);
@@ -81,11 +81,6 @@
             x = x + width + gap;
         }
         addEventListener('mousemove',(event) => {
-            // lights.forEach(element => {
-            //     if(distance(mouse.x, mouse.y, element.style.left+10, element.style.top+10) <= 300) {
-            //         element.click()
-            //     }
-            // });
             user.style.top = `${event.pageY-100}px`;
             user.style.left = `${event.pageX-100}px`;
         });
@@ -95,7 +90,10 @@
             requestAnimationFrame(animate);
             lights[Math.floor(Math.random()* lights.length)].click();
         }
-        animate();
+        setInterval(() => {
+            lights[Math.floor(Math.random()* lights.length)].click();
+        },200)
+        // animate();
 
     </script>
 </body>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote of the Day!!!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto');
+        body {
+            font-family:'Roboto',sans-serif;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            height:100vh;
+            /* width: 100vw; */
+            overflow: hidden;
+        }
+        button {
+            background-color:blueviolet;
+            color: white;
+            border-radius: 0.2rem;
+            padding: 0.5rem;
+            border: 2px solid transparent;
+            margin: auto;
+        }
+        button:hover {
+            border: 2px solid blueviolet;
+            background-color: rgba(137, 43, 226, 0.136);
+            color:blueviolet;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="text-align: center;">
+        <label style="font-size: 30px;" id="quote-text"></label>    <br><br>
+        <label style="font-size: 15px;font-style: italic;" id="author-text"></label>    <br><br>
+        <button id="btn">Generate a new Quote</button>
+    </div>
+    <script>
+        async function getQuote() {
+            let res = await fetch(`https://api.quotable.io/random`);
+            let data = await res.json();
+            document.getElementById("quote-text").textContent = `"${data.content}"`;
+            document.getElementById("author-text").textContent = `- ${data.author}`;
+        }
+        document.addEventListener("DOMContentLoaded",getQuote);
+        document.getElementById("btn").onclick = getQuote;
+    </script>
+</body>
+</html>

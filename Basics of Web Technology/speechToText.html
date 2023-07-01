@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech To Text</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins');
+        body {
+            font-family: 'Poppins',sans-serif;
+            display: flex;
+            height:100vh;
+            width:100vw;
+            overflow: hidden;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            width:max-content;
+            text-align: center;
+        }
+        #text-container {
+            border: 2px solid #22222296;
+            padding: 0.5rem;
+            border-radius: 0.2rem;
+
+        }
+        button {
+            border-radius: 0.2rem;
+            padding: 0.5rem;
+            border: 2px solid transparent;
+            color:white;
+        }
+        #start {
+            background-color: rgb(17, 213, 17);
+        }
+        #start:hover {
+            background-color: white;
+            color:rgb(17, 213, 17);
+            border:2px solid rgb(17, 213, 17);
+        }
+        #stop {
+            background-color: rgb(186, 6, 6);
+        }
+        #stop:hover {
+            background-color: white;
+            color:rgb(186, 6, 6);
+            border:2px solid rgb(186, 6, 6);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="text-container">
+            <span id="final-text">&nbsp;</span>
+            <span id="text">&nbsp;</span>
+        </div>
+        <br>
+        <p id="status" style="display: none;">listening...</p>
+        <button id="start">Start</button>
+        <button id="stop">Stop</button>
+    
+    </div>
+
+    <script>
+
+        const text = document.querySelector('#text');
+        const finalText = document.querySelector('#final-text');
+        if ("webkitSpeechRecognition" in window) {
+            let speechRecognition = new webkitSpeechRecognition();
+
+            let final_transcript = "";
+            speechRecognition.continuous = true;
+            speechRecognition.interimResults = true;
+
+            speechRecognition.onstart = () => {
+                document.querySelector("#status").textContent = "listening...";
+            };
+            speechRecognition.onerror = () => {
+                document.querySelector("#status").textContent = " ";
+            };
+            speechRecognition.onend = () => {
+                document.querySelector("#status").textContent = " ";
+            };
+
+            speechRecognition.onresult = (event) => {
+                let interim_transcript = "";
+
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        final_transcript += event.results[i][0].transcript;
+                    } else {
+                        interim_transcript += event.results[i][0].transcript;
+                    }
+                }
+
+                // Set the Final transcript and Interim transcript.
+                // document.querySelector("#final").innerHTML = final_transcript;
+                // document.querySelector("#interim").innerHTML = interim_transcript;
+                text.textContent = interim_transcript;
+                finalText.textContent = final_transcript;
+            };
+
+
+            document.querySelector("#start").onclick = () => {
+                speechRecognition.start();
+            };
+            document.querySelector("#stop").onclick = () => {
+                speechRecognition.stop();
+            };
+
+        } else {
+            console.log("Speech Recognition Not Available");
+        }
+
+    </script>
+</body>
+</html>

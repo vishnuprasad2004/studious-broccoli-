@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            overflow: hidden;
+            height:100vh;
+        }
+        .box {
+            height:100px;
+            width:100px;
+            position: absolute;
+            background-color: orangered;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <!-- <div class="box"></div> -->
+    <script>
+        const box = document.querySelector(".box");
+        let offsetX, offsetY;
+        const move = (event) => {
+            box.style.left = `${event.clientX - offsetX}px`;
+            box.style.top = `${event.clientY - offsetY}px`;
+        }
+
+        box.addEventListener("mousedown", (event) => {
+            offsetX = event.clientX - box.offsetLeft;
+            offsetY = event.clientY - box.offsetTop;
+            document.body.style.cursor = 'move';
+            document.addEventListener("mousemove",move);
+        });
+        
+        document.addEventListener("mouseup",() => {
+            document.body.style.cursor = 'default';
+            document.removeEventListener("mousemove",move);
+        });
+
+    </script>
+</body>
+</html>

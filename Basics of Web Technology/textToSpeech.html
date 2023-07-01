@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Speech</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins');
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height:100vh;
+            width:100vw;
+            overflow: hidden;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        button {
+            background-color:blueviolet;
+            color: white;
+            border-radius: 0.2rem;
+            padding: 0.5rem;
+            border: 2px solid transparent;
+        }
+        button:hover {
+            border: 2px solid blueviolet;
+            background-color: white;
+            color:blueviolet;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <textarea placeholder="Enter your text here ..." cols="30" rows="10"></textarea><br><br>
+        <button>Speak</button>
+    </div>
+    <script>
+        const text = document.querySelector('textarea');
+        const button = document.querySelector('button');
+        
+        let maleVoice = 'Microsoft Ravi - English (India)';
+        let femaleVoice = 'Microsoft Zira - English (United States)';
+        
+        let voices = window.speechSynthesis.getVoices();
+        console.log(window.speechSynthesis.getVoices());
+
+        button.addEventListener("click", () => {
+            let utterance = new SpeechSynthesisUtterance(text.value);
+            for (let i = 0; i < voices.length; i++) {
+                if (voices[i].name === maleVoice) {
+                    utterance.voice = voices[i];
+                }
+            }
+            window.speechSynthesis.speak(utterance);
+            
+        });
+
+    </script>
+</body>
+</html>

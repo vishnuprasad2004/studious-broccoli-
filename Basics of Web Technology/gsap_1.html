@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+
+        body {
+            height:100vh;
+            width:100vw;
+            overflow: hidden;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            position: relative;
+            height: 80%;
+            width: 70%;
+            /* background-color: red; */
+        }
+
+        .item-container {
+            overflow: hidden;
+            position: absolute;
+            height:100%;
+            width:0%;
+        }
+
+        img {
+            height: 100%;
+            /* width:100%; */
+            /* position: absolute; */
+            object-fit: cover;
+        }
+        .text {
+            width: 400px;
+            height:100px;
+            overflow: hidden;
+            z-index: 9;
+            position: absolute;
+            bottom: 15%;
+            left:10%;
+            /* background-color: blue; */
+        }
+
+        .text h1 {
+            color:red;
+            font-size: 6vh;
+            top:100px;
+            /* position: relative; */
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="text">
+            <h1>Nature</h1>
+            <h1>Building</h1>
+            <h1>Japan</h1>
+        </div>
+        <div class="item-container">
+            <img src="https://images.pexels.com/photos/14462604/pexels-photo-14462604.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
+        </div>
+        <div class="item-container">
+            <img src="https://images.pexels.com/photos/3879060/pexels-photo-3879060.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
+        </div>
+        <div class="item-container">
+            <img src="https://images.pexels.com/photos/997443/pexels-photo-997443.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
+        </div>
+    </main>
+    <script>
+        // setInterval(() => {
+        //     gsap.to('.item-container',{
+        //         ease: Expo.easeInOut,
+        //         width: '100%',
+        //         duration: 2,
+        //         stagger: 2
+        //     });
+        //     setTimeout(() => {
+        //         document.getElementsByClassName('item-container').forEach(element => {
+        //             element.style.width = '0%';
+        //         });
+        //     },5990)
+        // },6000);
+
+        gsap.to('.item-container',{
+            ease: Expo.easeInOut,
+            width: '100%',
+            duration: 2,
+            stagger: 2.,
+            repeat:-1
+        });
+
+        gsap.to('.text h1',{
+            ease: Expo.easeInOut,
+            top: 0,
+            stagger: 2
+        });
+
+        gsap.to('.text h1',{
+            delay:2,
+            ease: Expo.easeInOut,
+            top: '-100px',
+            stagger: 2
+        });
+    </script>
+</body>
+</html>

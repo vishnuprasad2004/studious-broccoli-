@@ -32,23 +32,39 @@
 </head>
 <body>
     <div>
-        <textarea placeholder="Enter your text here ..." cols="30" rows="10"></textarea><br><br>
+        <h2>Text to Speech</h2>
+        <textarea placeholder="Enter your text here ..." cols="30" rows="10"></textarea><br>
+        <div>
+            <label for="voice"><input type="radio" name="voice" value="male">Male</label>
+            <label for="voice"><input type="radio" name="voice" value="female" checked>Female</label>
+        </div>
         <button>Speak</button>
     </div>
     <script>
         const text = document.querySelector('textarea');
         const button = document.querySelector('button');
+        const voice = document.getElementsByName('voice');
         
         let maleVoice = 'Microsoft Ravi - English (India)';
         let femaleVoice = 'Microsoft Zira - English (United States)';
         
         let voices = window.speechSynthesis.getVoices();
-        console.log(window.speechSynthesis.getVoices());
+        // console.log(window.speechSynthesis.getVoices());
 
         button.addEventListener("click", () => {
             let utterance = new SpeechSynthesisUtterance(text.value);
+            let speakVoice;
+            voice.forEach(element => {
+                if(element.checked) {
+                    if(element.value === "male") {
+                        speakVoice = maleVoice;
+                    }else {
+                        speakVoice = femaleVoice;
+                    }
+                }
+            });
             for (let i = 0; i < voices.length; i++) {
-                if (voices[i].name === maleVoice) {
+                if (voices[i].name === speakVoice) {
                     utterance.voice = voices[i];
                 }
             }

@@ -32,8 +32,22 @@ const green = document.getElementById("green");
 //     greenAudio.play()
 // }
 
-function generate() {
-    red.classList.toggle('.bright')
-}
+// function generate() {
+//     red.classList.toggle('.bright')
+// }
 
-generate()
+// generate()
+
+
+red.onclick = () => {
+    document.getElementById("audio-1").play();
+}
+yellow.onclick = () => {
+    document.getElementById("audio-2").play();
+}
+blue.onclick = () => {
+    document.getElementById("audio-3").play();
+}
+green.onclick = () => {
+    document.getElementById("audio-4").play();
+}

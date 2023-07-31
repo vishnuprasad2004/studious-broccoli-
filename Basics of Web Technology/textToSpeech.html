@@ -15,29 +15,49 @@
             overflow: hidden;
             text-align: center;
             font-family: 'Poppins', sans-serif;
+            background-color: crimson;
+        }
+        #container {
+            background-color: aliceblue;
+            padding: 0px 20px 10px 20px;
+            border-radius: 0.5rem;
+            box-shadow: 1px 1px 15px rgb(101, 9, 27);
+        }
+        #container span {
+            font-size: 10px;
+            font-weight: 500;
+            color: #555;
+        }
+        textarea {
+            font-family: "Poppins",sans-serif;
+            font-size:15px;
+        }
+        input[type=radio] {
+            accent-color: crimson;
         }
         button {
-            background-color:blueviolet;
+            background-color:crimson;
             color: white;
             border-radius: 0.2rem;
             padding: 0.5rem;
             border: 2px solid transparent;
         }
         button:hover {
-            border: 2px solid blueviolet;
+            border: 2px solid crimson;
             background-color: white;
-            color:blueviolet;
+            color:crimson;
         }
     </style>
 </head>
 <body>
-    <div>
-        <h2>Text to Speech</h2>
+    <div id="container">
+        <h1>Text to Speech</h1>
         <textarea placeholder="Enter your text here ..." cols="30" rows="10"></textarea><br>
+        <span>Write the text in the above area and select a Voice</span>
         <div>
             <label for="voice"><input type="radio" name="voice" value="male">Male</label>
             <label for="voice"><input type="radio" name="voice" value="female" checked>Female</label>
-        </div>
+        </div><br>
         <button>Speak</button>
     </div>
     <script>
@@ -45,11 +65,11 @@
         const button = document.querySelector('button');
         const voice = document.getElementsByName('voice');
         
-        let maleVoice = 'Microsoft Ravi - English (India)';
+        let maleVoice = 'Microsoft David - English (United States)';
         let femaleVoice = 'Microsoft Zira - English (United States)';
         
         let voices = window.speechSynthesis.getVoices();
-        // console.log(window.speechSynthesis.getVoices());
+        console.log(window.speechSynthesis.getVoices());
 
         button.addEventListener("click", () => {
             let utterance = new SpeechSynthesisUtterance(text.value);

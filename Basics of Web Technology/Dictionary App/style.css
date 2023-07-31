@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+body {
+    height:100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    background-color: cornflowerblue;
+}
+
+.container {
+    width: 420px;
+    border-radius: 0.5rem;
+    padding: 28px 28px 45px;
+    background-color: aliceblue;
+    box-shadow: 0 0 4px rgb(55, 83, 134);
+}
+
+.container header {
+    text-align: center;
+    font-size: 30px;
+}
+
+.container input {
+    font-family: "Poppins", sans-serif;
+    width:100%;
+    outline: none;
+}
+
+.container ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.container ul li {
+    display: flex;
+    margin-bottom:10px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+    align-items: center;
+    justify-content: space-between;
+}
+
+ul li:last-child {
+    margin-bottom:0px;
+    padding-bottom: 5px;
+    border-bottom:none;
+}
+
+ul .word p {
+    margin:0;
+    font-size: 22px;
+    font-weight: 500;
+}
+ul .word span {
+    font-size: 17px;
+    color:#999;
+}
+
+ul .word i {
+    cursor: pointer;
+    font-size: 15px;
+    color:#999;
+}
+
+#output ul li {
+    padding-left: 10px;
+    border-radius: 4px 0 0 4px;
+    border-left: 4px solid cornflowerblue;
+}

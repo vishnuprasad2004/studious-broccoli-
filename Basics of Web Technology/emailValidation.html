@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" onsubmit="validate()">
+        Enter Email:<input type="email" id="email">
+        <input type="submit" value="Submit">
+    </form>
+    <!-- <p id="demo"></p> -->
+    <script>
+        const emailSelector = document.getElementById("email");
+        function validate() {
+            let email = emailSelector.value;
+            let regex = /[a-z]{5,}[0-9]{1,}@gmail\.com/g;
+            // let str = "hello"
+            // document.getElementById("demo").textContent = regex.test(email);
+            // document.write(regex.test(str));
+            console.log(regex.test(email))
+            // let str2 = "h"
+        
+        }
+    </script>
+</body>
+</html>

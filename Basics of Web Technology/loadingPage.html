@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Page</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Rubik');
+        body {
+            margin: 0;
+            overflow-x: hidden;
+        }
+        #loading-screen {
+            width:100vw;
+            height:100vh;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* background-image: linear-gradient(black 10%, white 90%); */
+        }
+
+        #loading-percentage {
+            font-size: 30vw;
+            color:white;
+            font-family: monospace,'Rubik', Tahoma, Geneva, Verdana, sans-serif;
+            mix-blend-mode: difference;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="loading-screen">
+            <p id="loading-percentage">00%</p>
+        </div>
+    </div>
+    <script>
+        const pge = document.getElementById("loading-percentage");
+        let percentage = 0;
+        let time =200;
+        let interval = setInterval(()=> {
+            pge.textContent = (percentage > 9)?`${percentage}%`:`0${percentage}%`;
+            if(percentage >= 100) {
+                clearInterval(interval);
+            }
+            time = time - 15;
+            percentage++;
+        },time);
+    </script>
+</body>
+</html>

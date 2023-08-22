@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <script src="https://kit.fontawesome.com/9fa8e6aacd.js" crossorigin="anonymous"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins');
+        body {
+            width:100vw;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            --s: 200px;
+            --c1: #1d1d1d;
+            --c2: #4e4f51;
+            --c3: #3c3c3c;
+            background:
+                repeating-conic-gradient(from 30deg,#0000 0 120deg,var(--c3) 0 180deg) 
+                calc(.5*var(--s)) calc(.5*var(--s)*0.577),
+                repeating-conic-gradient(from 30deg,var(--c1) 0 60deg,var(--c2) 0 120deg,var(--c3) 0 180deg);
+            background-size: var(--s) calc(var(--s)*0.577);
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: aliceblue;
+            padding: 1rem;
+            border-radius: 1rem;
+            text-align: center;
+        }
+        button {
+            background-color:#1d1d1d;
+            color: white;
+            border-radius: 0.2rem;
+            padding: 0.5rem;
+            border: 2px solid transparent;
+            margin: auto;
+        }
+        button:hover {
+            background-color: #3c3c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Get the Weather</h2>
+        <button id="btn">Fetch</button>
+        <div class="weather-div">
+            <p id="temperature"></p>
+        </div>
+    </div>
+    <script>
+        function getCoords() {
+            let coords;
+            navigator.geolocation.getCurrentPosition((pos)=> {
+
+            })
+        }
+
+        function getCurrentLocation() {
+            let location = '';
+            location = navigator.geolocation.getCurrentPosition(async(pos)=> {
+                const crd = await pos.coords;
+                let reverseUrl = `http://api.openweathermap.org/geo/1.0/reverse?lat=${crd.latitude}&lon=${crd.longitude}&limit=1&appid=59e32fc319ae358c991b994f41bcf3fa`;
+                let response = await fetch(reverseUrl);
+                let data = await response.json();
+                console.log(data);
+                console.log(data[0].name);
+                // location = data[0].name;
+                return data[0].name;
+            });
+            console.log(location);
+            return location;
+        }
+        async function getWeather() {
+            let location = await getCurrentLocation();
+            let url = `https://goweather.herokuapp.com/weather/%7B${location}%7D`;
+            let response = await fetch(url);
+            let data = await response.json();
+            console.log(data.temperature);
+            document.getElementById('temperature').textContent = `Temperature: ${data.temperature}`;
+            
+        }
+        document.getElementById('btn').addEventListener("click",getWeather);
+    </script>
+</body>
+</html>

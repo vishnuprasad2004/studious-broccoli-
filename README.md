@@ -1,5 +1,5 @@
 # studious-broccoli-
-<style>
+<!-- <style>
     @import url('https://fonts.googleapis.com/css?family=Playfair Display');
     #marquee {
         font-family:"Playfair Display",sans-serif;
@@ -9,7 +9,7 @@
         margin:0;
     }
 </style>
-<marquee id="marquee"><p style="font-size:50px;">Homeworld of Studious Broccoli</p></marquee>
+<marquee id="marquee"><p style="font-size:50px;">Homeworld of Studious Broccoli</p></marquee> -->
 
 ## Homeworld of Studious Broccoli
 Welcome to the home branch where all ideas are born and everything is written.. all that I know is in this database.

@@ -61,6 +61,7 @@ body {
 }
 .key {
     -moz-user-select: none;
+    user-select: none;
     box-shadow: 0 0 5px black;
 }
 

@@ -1,6 +1,4 @@
 
-import java.util.*;
-
 public class patterns1{
 
     public static void invertedTri(int n){

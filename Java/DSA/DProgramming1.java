@@ -16,8 +16,29 @@ public class DProgramming1 {
         return dp[n];
     }
 
+    // ======== counting stairs problem =================
+
+    static class CountingStairs {
+        public static int recursion(int n) {
+            if(n < 0) return 0;
+            if(n == 0) return 1;
+            return recursion(n-1) + recursion(n-2);
+        }
+        
+        public static int memoization(int n,int dp[]) {
+            if(n < 0) return 0;
+            if(n == 0) return 1;
+            dp[n] = memoization(n-1, dp) + memoization(n-2, dp);
+            return dp[n];
+        }
+
+
+    }
+
     public static void main(String[] args) {
-        int dp[] = new int[6];
-        System.out.println(fibTabulation(5,dp));
+        int n = 5;
+        int dp[] = new int[n+1];
+        System.out.println(fibTabulation(n,dp));
+        
     }
 }

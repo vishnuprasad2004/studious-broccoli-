@@ -18,13 +18,15 @@ public class DProgramming1 {
 
     // ======== counting stairs problem =================
 
-    static class CountingStairs {
+    static class ClimbingStairs {
+        // Time Complexity - O(2^n)
         public static int recursion(int n) {
             if(n < 0) return 0;
             if(n == 0) return 1;
             return recursion(n-1) + recursion(n-2);
         }
         
+        // Time Complexity - O(n)
         public static int memoization(int n,int dp[]) {
             if(n < 0) return 0;
             if(n == 0) return 1;
@@ -32,6 +34,18 @@ public class DProgramming1 {
             return dp[n];
         }
 
+        public static int tabulation(int n) {
+            // initializing the table 'dp'
+            int dp[] = new int[n+1];
+            // base case values for the bottoms up approach
+            dp[0] = 1;
+            dp[1] = 1;
+            // tabulation loop
+            for(int i=2;i<=n;i++) {
+                dp[i] = dp[i-1] + dp[i-2];
+            }
+            return dp[n];
+        }
 
     }
 

@@ -1,14 +1,14 @@
-def print_checkboard(matrix):
-    print("==== Chess Board ====")
-    for i in range(len(matrix)):
-        for j in range(len(matrix[0])):
-            print(matrix[i][j],end=" ")
-        print()
+
+def solution(maze,i,j,ans):
+    if i == len(maze)-1 and j == len(maze[0])-1:
+        ans += ""
+        return True
+
+def is_safe(maze,row,col):
+    return (row>=0 and col>=0 and row < len(maze) and col < len(maze) and maze[row][col] == 1 )
 
 
-def solution():
-    pass
-
-def is_safe():
-    pass
-
+maze = [[1,0,0,0],
+        [1,1,0,1],
+        [0,1,0,0],
+        [1,1,1,1]]

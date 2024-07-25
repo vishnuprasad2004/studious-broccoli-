@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class BinaryTree2 {
     static class Node {
         int data;
@@ -78,14 +80,139 @@ public class BinaryTree2 {
     }
 
 
+    static class Info2 {
+        Node node;
+        int hd;
+        Info2(Node node, int hd) {
+            this.node = node;
+            this.hd = hd;
+        }
+    }
+
+    public static void topView(Node root) {
+        // level order traversal
+        Queue<Info2> q = new LinkedList<>();
+        HashMap<Integer, Node> map = new HashMap<>();
+
+        int min = 0; int max = 0;
+        q.add(new Info2(root,0));
+        q.add(null);
+
+        while(!q.isEmpty()) {
+            Info2 curr = q.remove();
+            if(curr == null) {
+                if(q.isEmpty()) {
+                    break;
+                } else {
+                    q.add(null);
+                }
+                continue;
+            }
+
+            if(!map.containsKey(curr.hd)) { // first time the hd occurs
+                map.put(curr.hd, curr.node);
+            }
+
+            if(curr.node.left != null) {
+                q.add(new Info2(curr.node.left, curr.hd - 1));
+                min = Math.min(min, curr.hd-1);
+            }
+
+            if(curr.node.right != null) {
+                q.add(new Info2(curr.node.right, curr.hd + 1));
+                max = Math.max(min, curr.hd + 1);
+            }
+        }
+        System.out.println(max + " " + min);
+        for(int i=min; i<=max; i++) {
+            System.out.print(map.get(i).data + " ");
+        }
+        System.out.println();
+
+    }
+
+
+    public static void bottomView(Node root) {
+        // level order traversal
+        Queue<Info2> q = new LinkedList<>();
+        HashMap<Integer, Node> map = new HashMap<>();
+
+        int max=0; int min=0;
+        q.add(new Info2(root, 0));
+        q.add(null);
+
+        while(!q.isEmpty()) {
+            Info2 curr = q.remove();
+            if (curr == null) {
+                if(q.isEmpty()) {
+                    break;
+                }else {
+                    q.add(null);
+                }
+                continue;
+            }
+
+            map.put(curr.hd, curr.node);
+
+            if(curr.node.left != null) {
+                q.add(new Info2(curr.node.left, curr.hd - 1));
+                min = Math.min(min, curr.hd-1);
+            }
+
+            if(curr.node.right != null) {
+                q.add(new Info2(curr.node.right, curr.hd + 1));
+                max = Math.max(min, curr.hd + 1);
+            }
+        }
+
+        System.out.println(max + " " + min);
+        for(int i=min; i<=max; i++) {
+            System.out.print(map.get(i).data + " ");
+        }
+        System.out.println();
+    }
+
+
+    public static void kthLevel(Node root, int k, int level) {
+        if(root == null) return;
+        
+        if(level == k) {
+            System.out.print(root.data + " ");
+            return; 
+        }
+
+        kthLevel(root.left, k, level+1);
+        kthLevel(root.right, k, level+1);
+    }
 
 
 
     public static void main(String[] args) {
         int nodes[] = {1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
 
-        BinaryTree tree = new BinaryTree();
-        Node root = tree.buildTree(nodes);
-        System.out.println(diameter2(root).d);
+        // BinaryTree tree = new BinaryTree();
+        // Node root = tree.buildTree(nodes);
+        // System.out.println(diameter2(root).d);
+
+        /*
+         *      1
+         *     / \
+         *    2   3
+         *   / \ / \
+         *  4  5 6  7
+         * 
+         */
+        Node root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+        root.right.left = new Node(6);
+        root.right.right = new Node(7);
+
+        topView(root);
+        bottomView(root);
+        kthLevel(root, 2, 1);
+
     }
 }

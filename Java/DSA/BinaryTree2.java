@@ -89,6 +89,14 @@ public class BinaryTree2 {
         }
     }
 
+    /*
+     *      1
+     *     / \
+     *    2   3
+     *   / \ / \
+     *  4  5 6  7
+     * Top view: 4 2 1 3 7
+     */
     public static void topView(Node root) {
         // level order traversal
         Queue<Info2> q = new LinkedList<>();
@@ -131,7 +139,14 @@ public class BinaryTree2 {
 
     }
 
-
+    /*
+     *      1
+     *     / \
+     *    2   3
+     *   / \ / \
+     *  4  5 6  7
+     * Top view: 4 2 6 3 7
+     */
     public static void bottomView(Node root) {
         // level order traversal
         Queue<Info2> q = new LinkedList<>();
@@ -188,7 +203,7 @@ public class BinaryTree2 {
 
 
     public static void main(String[] args) {
-        int nodes[] = {1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
+        // int nodes[] = {1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
 
         // BinaryTree tree = new BinaryTree();
         // Node root = tree.buildTree(nodes);

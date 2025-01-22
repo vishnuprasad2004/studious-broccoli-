@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Intellidoc: AI Assistent</title>
+  <style> 
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 16px;
+      background-color: rgb(38, 38, 38);
+    }
+    main {
+      background-color: whitesmoke;
+      padding: 20px;
+      margin: 0;
+      border-radius: 1rem;
+    }
+    #dropdown {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      background-color: rgb(229, 226, 226);
+      color: black;
+      width:80%;
+      border:1  px solid #0000008d;
+    }
+    h1 {
+      font-size: 410%;
+      margin:0;
+    }
+    h2 {
+      font-size: 200%;
+      margin:0;
+    }
+    #header {
+      padding-left: 20px;
+      padding-right: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer {
+      color: white;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      font-size: 14px;
+    }
+    input[type=text] {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #0000008d;
+      background-color: rgb(229, 226, 226);
+      color: black;
+      width: 50%;
+    }
+
+    input[type=file] {
+      padding: 6px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #0000008d;
+      background-color: rgb(229, 226, 226);
+      color: black;
+      width: 50%;
+    }
+
+    ::-webkit-file-upload-button {
+      display: none;
+    }
+
+    button {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      background-color: rgb(229, 226, 226);
+      color: black;
+      border:1  px solid #0000008d;
+    }
+
+    button:active {
+      background-color: rgb(255, 255, 255);
+      color: black;
+    }
+
+    #actions {
+      display: flex;
+      justify-content: center;
+      gap:15px;
+      padding: 20px;
+    }
+
+    .modal {
+      display: none;
+      padding: 10px;
+    }
+    .modal.active {
+      display: block;
+      background-color: whitesmoke;
+      padding: 2rem;
+      border-radius: 1rem;
+    }
+
+  </style>
+</head>
+<body>
+  <main>
+    <div id="header">
+      <div>
+        <h1>Intellidoc: AI Assistent </h1>
+        <h2>Welcome to the Admin Dashboard</h2>
+      </div>
+      <img src="https://github.com/user-attachments/assets/4060aa21-1a58-442f-aead-243671e3f721" alt="logo" width="200px">
+    </div>
+    <br>
+    <form action="" method="post">
+      <select name="department" id="dropdown">
+        <option value="Department">Department</option>
+        <option value="HR">HR</option>
+        <option value="IT">IT</option>
+        <option value="Management">Management</option>
+        <option value="Marketing and Sales">Marketing and Sales</option>
+      </select>
+    </form>
+    <p>Managing documents for collections: <span>human_resources_documents.pptx</span></p>
+  </main>
+  <div id="actions">
+    <button id="show-document">Show Document</button>
+    <button id="insert-document">Insert Document</button>
+    <button id="delete-document">Delete Document</button>
+  </div>
+
+  <!-- show the document -->
+  <div class="modal" id="show-document-modal">
+    <h2>All the Document</h2>
+    <!--  -->
+    <div id="documents"></div>
+    Document content goes here
+  </div>
+
+  <!-- insert the document -->
+  <form action="/" method="post" id="insert-document-modal" class="modal">
+    <h2>Insert a Document</h2>
+    <label for="">Insert a Document: <input type="file" name="file" id="file"></label>
+    <button>Insert</button>
+    <br>
+    <span style="font-weight: 900;font-size: 16px;">Drag the file on click here to Insert a document.</span>
+  </form>
+  
+  <!-- delete a document -->
+  <form action="" method="post" id="delete-document-modal" class="modal">
+    <h2>Delete a Document</h2>
+    <div id="available-files"></div>
+    <input type="text" name="file-name" id="file">
+    <button>Delete</button>
+  </form>
+
+  <footer>© 2025</footer>
+
+
+
+  <script>
+    const buttons = document.querySelectorAll('#actions button');
+    const modals = document.querySelectorAll('.modal');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetId = button.id.replace('-document', '-document-modal'); // Get corresponding modal ID
+            modals.forEach(modal => {
+                if (modal.id === targetId) {
+                    modal.classList.add('active'); // Show the target modal
+                } else {
+                    modal.classList.remove('active'); // Hide all other modals
+                }
+            });
+        });
+    });
+
+  </script>
+</body>
+</html>

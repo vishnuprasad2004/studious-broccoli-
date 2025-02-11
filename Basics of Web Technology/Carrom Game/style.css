@@ -1,0 +1,32 @@
+body {
+    background-color: #111;
+    margin:0;
+    overflow: hidden;
+    height:100%;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+img {
+    display: none;
+    height: 100vh;
+    width: 100vh;
+}
+
+canvas {
+    border: 10px solid rgb(44, 11, 11);
+}
+
+.color {
+    --color1: lightcyan;
+    --color1: lightblue;
+    --color1: lightgreen;
+    --color1: lightgrey;
+    --color1: lightcoral;
+    /* --color1: lightgoldenrodyellow; */
+    --color1: lightsalmon;
+    --color1: lightseagreen;
+    --color1: lightyellow;
+    --color1: lightpink;
+}

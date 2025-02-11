@@ -92,9 +92,13 @@ public class BinarySearchTree1 {
     }
 
 
-    public static void printInOrder(Node root, int k1, int k2) {
+    public static void printInRange(Node root, int k1, int k2) {
 
     }
+
+    // public static boolean isValid() {
+        
+    // }
 
     public static void main(String[] args) {
         int values[] = {8, 5, 3, 1, 4, 6, 10, 11, 14};

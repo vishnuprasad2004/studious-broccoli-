@@ -2,9 +2,121 @@ import java.io.*;
 import java.util.*;
 
 public class TnP {
+    /*
+     * Sarah eats 1 chocolate everyday and saves the wrappers in a container.
+     * 7 wrappers -> 1 chocolate
+     * Calculate the no of days she can eat chocolate/day.
+     */
+    public static int Question1(int ch, int w) {
+        int days = ch;
+        int wrappers = ch + w;
+            // while (wrappers >= 7) { 
+            //     int q = wrappers / 7;
+            //     int r = wrappers % 7;
+            //     days += q;
+            //     wrappers -= q;
+            //     wrappers += r;
+            // }
+        return days;
+    }
 
-    public void isDisarium(int n) {
+    /*
+     * DIFFICULT : Like trapping rainwater wala question
+     * 
+     */
+    public static void Question2(int heights[]) {
+        int n = heights.length;
+        int maxArea = 0;
+        for(int i=0;i<n-1;i++) {
+            for(int j=i; j<n; j++) {
+                int width = j-i;
+                int height = Math.min(heights[i], heights[j]);
+                int area = width * height;
+                maxArea = Math.max(maxArea, area);
+            }
+        }
 
+        System.out.println(maxArea);
+    }
+
+    public static void Question3(String str) {
+        // char strArr[] = str.toCharArray();
+        // Arrays.sort(strArr);
+        // int i = 0;
+        // int count = 0;
+        // while(i < strArr.length-1) { 
+        //     if (strArr[i] == strArr[i+1]) {
+        //         i += 2;
+        //     } else {
+        //         count += 1;
+        //         i++;
+        //     }
+        // }
+        // if(count <= 1) {
+        //     System.out.println("YES");
+        // } else {
+        //     System.out.println("NO");
+        // }
+        // char arr[] = str.toCharArray();
+        HashMap<Character,Integer> map = new HashMap<>();
+        for(int i=0;i<str.length(); i++) {
+            // if the char exists
+            if(map.containsKey(str.charAt(i))) {
+                map.put(str.charAt(i), map.get(str.charAt(i))+1);
+            } else {
+                map.put(str.charAt(i),1);
+            }
+        }
+
+        // if(map.containsValue(2)) {
+        //     System.out.println("YES");
+        // } else {
+        //     System.err.println("NO");
+        // }
+    }
+
+
+    public static int ratsNHouses(int r, int units, int arr[]) {
+        if(arr.length == 0) return -1;
+
+        int houses = 0;
+        int totalunits = r * units;
+        int sum =0;
+
+        for(int i=0;i< arr.length;i++){
+            sum += arr[i];
+            houses++;
+            if(sum >= totalunits) {
+                return houses;
+            }
+        
+        }
+        if(sum < totalunits) {
+            return 0;
+        } else {
+            return houses;
+        }
+
+    }
+
+    public static void checkSum(int arr[], int target) {
+
+    } 
+
+    public static int buyNSellStocks(int prices[]) {
+        int buyPrice = Integer.MAX_VALUE;
+        int maxProfit = 0;
+
+        for (int i = 0; i < prices.length; i++) {
+            if (buyPrice < prices[i]) {
+                int profit = prices[i] - buyPrice;
+                maxProfit = Math.max(profit, maxProfit);
+            } else {
+                buyPrice = prices[i];
+            }
+        }
+
+        return maxProfit;
     }
 
     public static int feedMonkeys(int n, int m, int p, int k, int j) {
@@ -128,7 +240,82 @@ public class TnP {
         }
     }
 
+    //its actually a diamond shape
+    /*
+        Question from Hackerrank drive
+    **.**
+    *...*
+    .....
+    *...*
+    **.**
+     */
+    public static void printTrapezium(int n) {
+        //part 1
+        for(int i=n; i>=1;i--) {
+            for(int j=1; j<i; j++) {
+                System.out.print("* ");
+            }
+            for(int j=0;j<(n-i+1)*2-1;j++) {
+                System.out.print(". ");
+            }
+            for(int j=1; j<i; j++) {
+                System.out.print("* ");
+            }
+            System.out.println();
+        }
+        // part 2
+        for(int i=1; i<n;i++) {
+            for(int j=0; j<i; j++) {
+                System.out.print("* ");
+            }
+            for(int j=(n-i)*2-1; j>=1; j--) {
+                System.out.print(". ");
+            }
+            for(int j=0; j<i; j++) {
+                System.out.print("* ");
+            }
+            System.out.println();
+        }
+        
+    }
+    /*
+        Question from Accenture Drive
+        find if autobiographical number 
+    */
+    public static int findAutoCount(String s) {
+        if (s.length() < 2) return 0;
+        // first check if the number is autobiographical or not
+        int zeroCount = Integer.parseInt(s.substring(0, 1));
+        int oneCount = Integer.parseInt(s.substring(1, 2));
+        int uniqueNumCount = 2;
+        // HashMap<Integer,Integer> count = new HashMap<>();
+
+        int z = 0;
+        int o = 0;
+        for (int i=0; i<s.length(); i++) {
+            // System.out.println(Integer.parseInt(s.substring(i, i+1)));
+            if(Integer.parseInt(s.substring(i, i+1)) == 0) {
+                z++;
+            } else if (Integer.parseInt(s.substring(i, i+1)) == 1) {
+                o++;
+            }
+        }
+    
+        if(zeroCount == z && oneCount == o) {
+            if (zeroCount != 0 && zeroCount != 1) {
+                uniqueNumCount++;
+            }
+            if (oneCount != 0 && oneCount != 1) {
+                uniqueNumCount++;
+            }
+            return uniqueNumCount;
+        } else {
+            return 0;
+        }
+    }
+
     public static void main(String[] args) throws IOException {
-        System.out.println(magicNumber(99, 3));
+        // printTrapezium(3);
+        System.out.println(findAutoCount("1210"));
     }
 }

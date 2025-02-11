@@ -1,4 +1,3 @@
-import java.util.*;
 
 
 public class EquationsSolver {
@@ -55,17 +54,17 @@ public class EquationsSolver {
 
     
     public static void inverse(int A[][], float inverse[][]) { 
-        //A^-1 = adj(A)/det(A)
-        int n = A.length;
-        int det = determinant(A, n);
-        float adj[][] = new float[n][n];
-        adjoint(A, adj, n);
+        // //A^-1 = adj(A)/det(A)
+        // int n = A.length;
+        // int det = determinant(A, n);
+        // float adj[][] = new float[n][n];
+        // adjoint(A, adj, n);
 
-        for(int i=0; i<n; i++) {
-            for(int j=0; j<n; j++) {
-                inverse[i][j] = (float)adj[i][j]/det;
-            }
-        }
+        // for(int i=0; i<n; i++) {
+        //     for(int j=0; j<n; j++) {
+        //         inverse[i][j] = (float)adj[i][j]/det;
+        //     }
+        // }
 
     }
 
@@ -90,21 +89,21 @@ public class EquationsSolver {
 
 
 
-    public static float[][] solution(int A[][],int b[][],int n) {
-        float sol = new float[n][n];
-        float inv = new float[n][n];
-        inverse(A, inv);
-        sol = matMultiply(inv, b);
-        return sol;
-    }
+    // public static float[][] solution(int A[][],int b[][],int n) {
+    //     float sol = new float[n][n];
+    //     float inv = new float[n][n];
+    //     inverse(A, inv);
+    //     sol = matMultiply(inv, b);
+    //     return sol;
+    // }
 
     public static void main(String[] args) {
-        int A[][] = {{7,-5},{-5,9}};
-        int b[][] = {{2},{-7}};
-        float X[][] = new float[2][2];
-        X = solution(A, b, 2);
-        for(int i=0;i<2;i++) {
-            System.out.print(X[i][i]+" ");
-        }
+        // int A[][] = {{7,-5},{-5,9}};
+        // int b[][] = {{2},{-7}};
+        // float X[][] = new float[2][2];
+        // X = solution(A, b, 2);
+        // for(int i=0;i<2;i++) {
+        //     System.out.print(X[i][i]+" ");
+        // }
     }
 }

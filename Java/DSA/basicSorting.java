@@ -1,5 +1,3 @@
-import java.util.*;
-// import java.ArrayPractice.*;
 
 public class basicSorting {
 

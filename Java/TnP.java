@@ -314,8 +314,53 @@ public class TnP {
         }
     }
 
+    /**
+     * will the 2 kangaroos meet with start positions as x1, x2 and velocities as v1, v2
+     * return "Yes" if they meet or "No" if they don't meet 
+     */
+    public static String willKangaroosMeet(int x1, int v1, int x2, int v2) {
+        if (v1-v2 <= 0) return "No";
+        int i = x1;
+        int j = x2;
+        while(i<=j) {
+            if (i == j) {
+                return "Yes";
+            }
+            i += v1;
+            j += v2;
+        }
+        return "No";
+    } 
+
+    /**
+     * Given the scores for the season, determine the number of times Maria breaks her record for most and least points scored during the season
+     * show the number of changes in min score and max score
+     */
+    public static int[] breakingRecords(int scores[]) {
+        int minmumScore = scores[0];
+        int maximumScore = scores[0];
+        int count[] = {0, 0};
+        // i represents the game number
+        for(int i=1; i<scores.length; i++) {
+            // min score record
+            if (minmumScore >= scores[i]) {
+                minmumScore = scores[i];
+                count[0]++;
+            } else {
+                maximumScore = scores[i];
+                count[1]++;
+            }
+        }
+        return count;
+    } 
+
     public static void main(String[] args) throws IOException {
         // printTrapezium(3);
-        System.out.println(findAutoCount("1210"));
+        // System.out.println(findAutoCount("1210"));
+        int arr[] = {12,24,10,24};
+        Scanner sc = new Scanner(System.in);
+        System.out.println(breakingRecords(arr)[0]);
+        System.out.println(breakingRecords(arr)[1]);
+
     }
 }

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+  <script src="https://unpkg.com/ml5@1/dist/ml5.min.js"></script>
+  <title>ML5 Hand Pose</title>
+</head>
+
+<body>
+  <h1>Hand Pose Detection</h1>
+  <p>This example uses the ML5 library to detect hand poses from a webcam video.</p>
+  <p id="dist"></p>
+  <p id="text"></p>
+  <script>
+    let handPose;
+    let video;
+    let hands = [];
+    let connections;
+
+    function dist(x1, y1, x2, y2) {
+      return Math.sqrt(Math.pow(x2 - x1) + Math.pow(y2 - y1));
+    }
+
+    function preload() {
+      // Load the handPose model
+      handPose = ml5.handPose();
+    }
+
+    function setup() {
+      createCanvas(640, 480);
+      // Create the webcam video and hide it
+      video = createCapture(VIDEO);
+      video.size(640, 480);
+      video.hide();
+      // start detecting hands from the webcam video
+      handPose.detectStart(video, gotHands);
+      // Get the skeletal connection information
+      connections = handPose.getConnections();
+    }
+
+    function draw() {
+      // Draw the webcam video
+      image(video, 0, 0, width, height);
+
+      if(hands.length > 0) {
+        let hand = hands[0];
+        let index = hand.index_finger_tip;
+        let thumb = hand.thumb_tip;
+        noStroke();
+        fill(255, 0, 255);
+        let dist = Math.sqrt(Math.pow(index.x - thumb.x, 2) + Math.pow(index.y - thumb.y, 2));
+        document.getElementById("dist").innerText = "Distance: " + dist;
+        circle(index.x, index.y, 10);
+        circle(thumb.x, thumb.y, 10);
+        if(dist < 50) {
+          // draw a cirlce at the average of these 2 points
+          let x = (index.x + thumb.x) / 2;
+          let y = (index.y + thumb.y) / 2;
+          fill(0, 255, 0);
+          circle(x, y, dist);          
+        } else {
+          document.getElementById("text").innerText = "";
+        }
+      }
+
+      // Draw the skeletal connections
+      // for (let i = 0; i < hands.length; i++) {
+      //   let hand = hands[i];
+      //   for (let j = 0; j < connections.length; j++) {
+      //     let pointAIndex = connections[j][0];
+      //     let pointBIndex = connections[j][1];
+      //     let pointA = hand.keypoints[pointAIndex];
+      //     let pointB = hand.keypoints[pointBIndex];
+      //     stroke(255, 0, 0);
+      //     strokeWeight(2);
+      //     line(pointA.x, pointA.y, pointB.x, pointB.y);
+      //   }
+      // }
+
+      // Draw all the tracked hand points
+    //   for (let i = 0; i < hands.length; i++) {
+    //     let hand = hands[i];
+    //     console.log(hand);
+    //     for (let j = 0; j < hand.keypoints.length; j++) {
+    //       let keypoint = hand.keypoints[j];
+    //       if(hand.handedness === "Left") {
+    //         fill(0, 0, 255);
+    //       } else {
+    //         fill(255, 0, 0);
+    //       }
+    //       // fill(0, 255, 0);
+    //       noStroke();
+    //       circle(keypoint.x, keypoint.y, 10);
+    //     }
+    //   }
+    }
+
+    // Callback function for when handPose outputs data
+    function gotHands(results) {
+      // save the output to the hands variable
+      hands = results;
+    }
+  </script>
+</body>
+
+</html>

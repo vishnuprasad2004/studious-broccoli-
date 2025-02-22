@@ -354,13 +354,31 @@ public class TnP {
         return count;
     } 
 
+    public static int findMediun(int arr[]) {
+        Arrays.sort(arr);
+        return arr[((int)(arr.length/2))];
+    }
+
+    public static int migratoryBirds(int arr[]) {
+        int freq[] = {0,0,0,0,0,0};
+        int ans = 0;
+        for (int i=0; i<arr.length; i++) {
+            freq[arr[i]]++;
+        }
+        for (int i=freq.length-1; i>=0; i--) {
+            ans = ans >= freq[i] ? ans:freq[i];
+        }
+        return ans;
+    }
+
     public static void main(String[] args) throws IOException {
         // printTrapezium(3);
         // System.out.println(findAutoCount("1210"));
-        int arr[] = {12,24,10,24};
-        Scanner sc = new Scanner(System.in);
-        System.out.println(breakingRecords(arr)[0]);
-        System.out.println(breakingRecords(arr)[1]);
+        int arr[] = {1,2,3,4,5,4,3,2,1,3,4};
+        // System.out.println(breakingRecords(arr)[0]);
+        // System.out.println(breakingRecords(arr)[1]);
+        // System.out.println(findMediun(arr));
+        System.out.println(migratoryBirds(arr));
 
     }
 }

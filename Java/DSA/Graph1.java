@@ -1,7 +1,41 @@
 import java.util.*;
 
 public class Graph1 {
-	static class Edge {
+
+    /*
+     *     === HOW TO STORE A GRAPH IN MEMORY ===
+     *    EXAMPLE:
+     *      1 -- 3
+     *     /    | \
+     *    0     |  5 -- 6
+     *     \    | /
+     *      2 -- 4
+     * 
+     *     Adjacency List (Array of Arraylists):
+     *     0 -> [(0,1), (0,2)]
+     *     1 -> [(1,0), (1,3)]
+     *     2 -> [(2,0), (2,4)]
+     *     3 -> [(3,1), (3,4), (3,5)]
+     *     4 -> [(4,2), (4,3), (4,5)]
+     *     5 -> [(5,3), (5,4), (5,6)]
+     *     6 -> [(6,5)]
+     *    
+     *     Adjacency Matrix:
+     *        0, 1, 2, 3, 4, 5, 6
+     *     0 [0, 1, 1, 0, 0, 0, 0]
+     *     1 [1, 0, 0, 1, 0, 0, 0]
+     *     2 [1, 0, 0, 0, 1, 0, 0]
+     *     3 [0, 1, 0, 0, 1, 1, 0]
+     *     4 [0, 0, 1, 1, 0, 1, 0]
+     *     5 [0, 0, 0, 1, 1, 0, 1]
+     *     6 [0, 0, 0, 0, 0, 1, 0]
+     * 
+     *     NOTE: Here, The graph will be stored using Array of Arraylists of Edges
+     * 
+     *   
+     */
+
+	public static class Edge {
 		int dest;
 		int src;
 		int wt;
@@ -15,7 +49,7 @@ public class Graph1 {
             this.wt =  wt;
         }
 	}
-
+    
     public static void createGraph(ArrayList<Edge> graph[]) {
         for(int i=0; i<graph.length; i++) {
             graph[i] = new ArrayList<>();
@@ -75,17 +109,28 @@ public class Graph1 {
                 dfs(graph, e.dest, vis);
             }
         }
+    }
 
+    public static boolean hasPath(ArrayList<Edge> graph[], int src, int dest, boolean vis[]) {
+        if(src == dest) return true;
+        vis[src] = true;
+        for (int i=0; i<graph[src].size(); i++) {
+            Edge e = graph[src].get(i);
+            if(!vis[e.dest] && hasPath(graph, e.dest, dest, vis)) {
+                return true;
+            }
+        }
+        return false;
     }
     
 
     public static void main(String[] args) {
         /**
-         1 -- 3
-         /    | \
+           1 -- 3
+          /    | \
          0     |  5 -- 6
-         \    | /
-         2 -- 4
+          \    | /
+           2 -- 4
          
          */
         int V = 7;
@@ -95,6 +140,7 @@ public class Graph1 {
         bfs(graph, 0);
         System.out.println("\nDFS Traversal:");
         dfs(graph, 0, new boolean[V]);
+        System.out.println("\nHas Path (Y/N) for 0 -> 6: " + hasPath(graph, 0, 6, new boolean[V]));
 
         
     }

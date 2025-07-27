@@ -99,14 +99,23 @@ public class Graph1 {
 
     }   
 
-    public static void dfs(ArrayList<Edge> graph[], int curr, boolean vis[]) {
+    public static void dfs(ArrayList<Edge> graph[]) {
+        boolean vis[] = new boolean[graph.length];
+        for (int i = 0; i < graph.length; i++) {
+            if(!vis[i]) {
+                dfsUtil(graph, i, vis);
+            }
+        }
+    }
+
+    public static void dfsUtil(ArrayList<Edge> graph[], int curr, boolean vis[]) {
         System.out.print(curr + " ");
         vis[curr] = true;
 
         for(int i=0; i<graph[curr].size(); i++) {
             Edge e = graph[curr].get(i);
             if (!vis[e.dest]) {
-                dfs(graph, e.dest, vis);
+                dfsUtil(graph, e.dest, vis);
             }
         }
     }
@@ -139,7 +148,7 @@ public class Graph1 {
         System.out.println("BFS Traversal:");
         bfs(graph, 0);
         System.out.println("\nDFS Traversal:");
-        dfs(graph, 0, new boolean[V]);
+        dfs(graph);
         System.out.println("\nHas Path (Y/N) for 0 -> 6: " + hasPath(graph, 0, 6, new boolean[V]));
 
         

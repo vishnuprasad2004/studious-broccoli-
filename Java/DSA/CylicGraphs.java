@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Cycle Detection in Graphs
@@ -45,6 +47,8 @@ public class CylicGraphs {
         graph[6].add(new Edge(6, 5));
     }
 
+
+	// Undirected Graphs
 	public static boolean detectCycleDfs(ArrayList<Edge> graph[]) {
 		boolean vis[] = new boolean[graph.length];
 		for (int i = 0; i < vis.length; i++) {
@@ -62,22 +66,69 @@ public class CylicGraphs {
 		// for neighbours
 		for (int i = 0; i < graph[src].size(); i++) {
 			Edge e = graph[src].get(i);
-			// case 3
+			// case 3: if you didn't visit the neighbour yet, then visit it
 			if(!vis[e.dest]) {
 				if(detectCycleDfsUtil(graph, vis, e.dest, src)) {
 					return true;
 				}
 			}
-			// case 1
+			// case 1: if neighour (visited) is not the parent and already visited, then it must have been visited before -> true cycle exists
 			if (vis[e.dest] && parent != e.dest) {
 				return true;
 			}
-			// case 2 -> do nothing -> continue
+			// case 2 -> if neighbour (visited) is parent then, do nothing -> continue
 		
 		}
 
 		return false;
 	}
+
+
+	/**
+	 * Bipartite Graph -> is a graph whose vertices can be divided into 2 independent sets, u and v such that every edge (u,v) either connects a vertex from U to V or a vertex from V to U. No edge should connect 2 nodes which are in the same set.
+	 	NOTE: If graph doen't have cycles then by default they are bipartite.
+			Acyclic graphs -> True
+			Even graphs -> True
+			Odd graphs -> False
+	 */
+	public static boolean isBipartite(ArrayList<Edge> graph[]) { // O(V+E)
+		Queue<Integer> q = new LinkedList<>();
+		// default (unvisited) -> 0, color 1 -> 1, color 2 -> 2
+		int color[] = new int[graph.length];
+		
+		
+		// we did this for disconnected graphs with components
+		for(int i=0;i<graph.length; i++) {
+			if(color[i] == 0) {
+
+				// BFS logic
+				q.add(i);
+				color[i] = 1;
+				while(!q.isEmpty()) {
+					int curr = q.remove();
+					for (int j = 0; j < graph[curr].size(); j++) {
+						Edge e = graph[curr].get(j);
+						// case 1: if neighbour doesn't have any color yet  
+						if(color[e.dest] == 0) {
+							int nextColor = color[curr] == 1 ? 2 : 1;
+							color[e.dest] = nextColor;
+							q.add(e.dest);
+						}		
+						// case 2: if neighbour color is same as curr color -> return false
+						else if (color[e.dest] == color[curr]) {
+							return false; // Not Bipartite
+						}			
+						// case 3: if neighbour is of different color, then do nothing, continue
+					}
+		
+				}
+			}
+		}
+
+		return true;
+	}
+
+
 
 	public static void main(String[] args) {
 		/**
@@ -91,6 +142,7 @@ public class CylicGraphs {
         int V = 7;
         ArrayList<Edge> graph[] = new ArrayList[V];
         createGraph(graph);
-		System.out.println(detectCycleDfs(graph));
+		// System.out.println(detectCycleDfs(graph));
+		System.out.println(isBipartite(graph)); // ans: false
 	}
 }

@@ -38,15 +38,9 @@ public class Graph1 {
 	public static class Edge {
 		int dest;
 		int src;
-		int wt;
 		Edge(int src, int dest) {
             this.src = src;
             this.dest = dest;
-        }
-		Edge(int src, int dest, int wt) {
-            this.src = src;
-            this.dest = dest;
-            this.wt =  wt;
         }
 	}
     
@@ -130,6 +124,17 @@ public class Graph1 {
             }
         }
         return false;
+    }
+
+    public static void allPaths(ArrayList<Edge> graph[], int src, int dest, String path) {
+        if(src == dest) {
+            System.out.println(path + dest);
+         
+            return;
+        }
+        for (Edge e : graph[src]) {
+            allPaths(graph, e.dest, dest, path + src);
+        }
     }
     
 

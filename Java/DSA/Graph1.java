@@ -136,6 +136,52 @@ public class Graph1 {
             allPaths(graph, e.dest, dest, path + src);
         }
     }
+
+
+    /**
+     * 
+     *  We have a matrix where each cell contains either a ‘0’ or a ‘1’, and any cell containing a 1 is
+        called a filled cell. Two cells are said to be connected if they are adjacent to each other
+        horizontally, vertically, or diagonally. If one or more filled cells are also connected, they form a
+        region. find the size of the largest region.
+     */
+    // function to find the area of an island
+    public static int findMaxIslandUtil(int grid[][], boolean vis[][], int i, int j) {
+        if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length || vis[i][j] || grid[i][j] == 0) {
+            return 0;
+        }
+
+        vis[i][j] = true;
+        int area = 1 + findMaxIslandUtil(grid, vis, i+1, j);
+        area += findMaxIslandUtil(grid, vis, i-1, j);
+        area += findMaxIslandUtil(grid, vis, i, j+1);
+        area += findMaxIslandUtil(grid, vis, i, j-1);
+        area += findMaxIslandUtil(grid, vis, i+1, j+1);
+        area += findMaxIslandUtil(grid, vis, i-1, j-1);
+        area += findMaxIslandUtil(grid, vis, i-1, j+1);
+        area += findMaxIslandUtil(grid, vis, i+1, j-1);
+        return area;
+    }
+    
+
+    public static int findMaxIsland(int grid[][]) {
+        int m = grid.length;
+        int n = grid[0].length;
+
+        boolean vis[][] = new boolean[m][n];
+        int maxArea = 0;
+
+        for (int i=0; i<m; i++) {
+            for (int j=0; j<n; j++) {
+                if(grid[i][j] == 1 && !vis[i][j]) {
+                    int currArea = findMaxIslandUtil(grid, vis, i, j);
+                    maxArea = Math.max(maxArea, currArea);
+                }
+            }
+        }
+
+        return maxArea;
+    }
     
 
     public static void main(String[] args) {
@@ -149,13 +195,13 @@ public class Graph1 {
          */
         int V = 7;
         ArrayList<Edge> graph[] = new ArrayList[V];
-        createGraph(graph);
-        System.out.println("BFS Traversal:");
-        bfs(graph, 0);
-        System.out.println("\nDFS Traversal:");
-        dfs(graph);
-        System.out.println("\nHas Path (Y/N) for 0 -> 6: " + hasPath(graph, 0, 6, new boolean[V]));
-
-        
+        // createGraph(graph);
+        // System.out.println("BFS Traversal:");
+        // bfs(graph, 0);
+        // System.out.println("\nDFS Traversal:");
+        // dfs(graph);
+        // System.out.println("\nHas Path (Y/N) for 0 -> 6: " + hasPath(graph, 0, 6, new boolean[V])); 
+        int m[][] = { {0, 0, 1, 1, 0}, {0, 0, 1, 1, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 1} };
+        System.out.println(findMaxIsland(m));
     }
 }

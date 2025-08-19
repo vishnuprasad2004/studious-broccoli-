@@ -3,11 +3,8 @@ import java.util.PriorityQueue;
 
 public class ShortestPathFinding {
 	public static class Edge {
-        @SuppressWarnings("unused")
 		int dest;
-        @SuppressWarnings("unused")
 		int src;
-        @SuppressWarnings("unused")
 		int wt;
 		Edge(int src, int dest, int wt) {
             this.src = src;

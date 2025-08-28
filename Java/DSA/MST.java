@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.PriorityQueue;
 
 public class MST {
@@ -55,7 +56,7 @@ public class MST {
 	}
 
 	// prim's algorithm 
-	public static int prims(ArrayList<Edge> graph[], int src) {
+	public static int prims(ArrayList<Edge> graph[], int src) { // O(V+ E.log(V))
 		int minCost = 0;
 		PriorityQueue<Pair> pq = new PriorityQueue<>();
 		boolean vis[] = new boolean[graph.length];
@@ -79,6 +80,72 @@ public class MST {
 	}
 
 
+	// required to implement kruskal's -> union-find data structure
+	public static int V = 6;
+	public static int par[];
+	public static int rank[];
+
+	public static void init() {
+		par = new int[V];
+		rank = new int[V];
+		for(int i=0; i<V; i++) {
+			par[i] = i;
+		}
+	}
+
+	public static int find(int x) {
+		if(par[x] == x) return x;
+		else return find(par[x]);
+	}
+
+	public static void union(int a, int b) {
+		int parA = find(a);
+		int parB = find(b);
+		if(rank[parA] == rank[parB]) {
+			par[parA] = parB;
+			rank[parB]++;
+		} else if (rank[parA] < rank[parB]) {
+			par[parA] = parB;
+		} else {
+			par[parB] = parA;
+		}
+	}
+
+	// kruskal's algorithm -> uses unionfind to detect cycles and create a MST 
+	public static int kruskals(ArrayList<Edge> edges) { // O(V + E.log(E))
+		init();
+		Collections.sort(edges); // IMPORTANT -> for minimum cost MST
+		int minCost = 0;
+		int count = 0; // count of edges used to create the MST
+
+		for(int i=0; count < V-1; i++) {
+			Edge e = edges.get(i);
+			int parSrc = find(e.src);
+			int parDest = find(e.dest);
+			if (parSrc != parDest) {
+				union(e.src, e.dest);
+				minCost += e.wt;
+				count++;
+			}
+			// else continue since same parents, so cycle will be created
+		}
+
+		return minCost;
+	}
+
+	// this is just a util function to convert an Adjacency List (Array of ArrayLists) to a list of Edges
+	public static ArrayList<Edge> convertGraph(ArrayList<Edge> graph[]) {
+		ArrayList<Edge> edges = new ArrayList<>();
+		for (ArrayList<Edge> list: graph) {
+			for (Edge e : list) {
+				edges.add(e);
+			}
+			
+		}
+		return edges;
+	}
+
+
 	public static void main(String[] args) {
 		// arrows to make directed graphs ↓→←↑↖↗↘↙
 
@@ -90,9 +157,13 @@ public class MST {
 			   2 ----→ 4
 				(3)
 			*/
-		int V = 6;
+		
 		ArrayList<Edge> graph[] = new ArrayList[V];
 		createGraph(graph);
 		System.out.println(prims(graph, 0)); // 9
+
+		// kruskal's algo
+		ArrayList<Edge> edges = convertGraph(graph);
+		System.out.println(kruskals(edges));
 	}
 }

@@ -30,7 +30,7 @@ public class UnionFind {
 
 		if(rank[parA] == rank[parB]) {
 			par[parB] = parA;
-			parA++;
+			rank[parA]++;
 		} else if (rank[parA] > rank[parB]) {
 			par[parB] = parA;
 		} else {

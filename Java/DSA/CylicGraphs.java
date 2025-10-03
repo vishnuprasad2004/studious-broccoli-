@@ -47,6 +47,20 @@ public class CylicGraphs {
         graph[6].add(new Edge(6, 5));
     }
 
+	public static void createDirectedGraph(ArrayList<Edge> graph[]) {
+        for(int i=0; i<graph.length; i++) {
+            graph[i] = new ArrayList<>();
+        }
+
+        graph[0].add(new Edge(0, 2));
+        
+        graph[1].add(new Edge(1, 0));
+        
+        graph[2].add(new Edge(2, 3));
+
+        graph[3].add(new Edge(3, 0));
+	}
+
 
 	// Undirected Graphs
 	public static boolean detectCycleDfs(ArrayList<Edge> graph[]) {
@@ -82,6 +96,28 @@ public class CylicGraphs {
 
 		return false;
 	}
+
+	public static boolean detectDirectedDfs(ArrayList<Edge> graph[]) {
+		boolean vis[] = new boolean[graph.length];
+		boolean rec[] = new boolean[graph.length];
+
+		return detectDirectedDfsUtil(graph, 0, vis, rec);
+	}
+	
+	public static boolean detectDirectedDfsUtil(ArrayList<Edge> graph[], int curr, boolean vis[], boolean rec[]) {
+		vis[curr] = true;
+		rec[curr] = true;
+		for (Edge e : graph[curr]) {
+			if(rec[e.dest]) {
+				return true;
+			} else if (!vis[e.dest]) {
+				return detectDirectedDfsUtil(graph, e.dest, vis, rec);
+			}
+		}
+
+		rec[curr] = false;
+		return false;
+	} 
 
 
 	/**
@@ -144,5 +180,9 @@ public class CylicGraphs {
         createGraph(graph);
 		// System.out.println(detectCycleDfs(graph));
 		System.out.println(isBipartite(graph)); // ans: false
+		
+        ArrayList<Edge> directedGraph[] = new ArrayList[4];
+		createDirectedGraph(directedGraph);
+		System.out.println(detectDirectedDfs(directedGraph));
 	}
 }

@@ -9,7 +9,7 @@ Here I will document about **Docker and Kubernetes** for future reference.
 
 </p>
 
-We have learnt about development for the last couple of years in various technologies, frameworks and languages like Python, Golang, Typescript, Java etc, but we never realised to deploy the service/tool/anything we developed for people to access it. Sure we may have used modern tools like vercel or render, but being a Software Developer we should know how to customize the flow and understand how deployment actually works.
+We have learnt about development for the last couple of years in various technologies, frameworks and languages like Python, Golang, Typescript, Java etc, but we never realised to deploy the service/tool/anything we developed for people to access it. Sure we may have used modern tools like vercel or render, but being a Software Developer we should know how to customize the flow and understand how deployment actually works. We cannot rely on vercel or render for enterprise code.
 
 <img src="https://i.redd.it/cg5q7x6wt5k71.jpg" alt="deployment meme, why is it important" width="500px">
 
@@ -28,6 +28,8 @@ In the traditional approach, we work and deploy on physical hardware aka servers
 Everyone have to have the same configuration and dependencies, otherwise "It works on my machine only"
 
 Imagine a person developing a service on windows and then has to deploy it on linux, the dependencies has to be the same, bad DX  :(
+
+---
 
 ## Virtualization Deployment - Almost there
 
@@ -78,6 +80,11 @@ Containerization is packaging a service/application (code, dep, lib, config) int
 <img src="https://preview.redd.it/16q5ebaotly71.png?auto=webp&s=cff5de40626ccd34c8f58e73016a1eadddea076d" alt="VM vs container meme" width="500px">
 
 <img src="https://media.licdn.com/dms/image/v2/D5612AQEN3VKUit15vQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1715412904464?e=2147483647&v=beta&t=wZY8fRlfcpzPwmpwg6AXyaCcYUZTKYF9lxBYtaP1xZA" alt="td vs vd vs cd" width="500px">
+
+---
+
+<img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/docker.png" width="100px">
+
 
 ## What is Docker 🐋 ?
 Docker is a tool that helps you package your application along with everything it needs  
@@ -262,10 +269,20 @@ Not all modules are "accessed" the same way as an HTTP API. Below are the main c
 
 ---
 
+
+### Container Registry
+
+A container registry is a storage system (like a library) for container images (blueprints for apps), allowing developers to store, share, and manage them efficiently, essential for DevOps and CI/CD, with options like public (Docker Hub) or private (Azure ACR, AWS ECR, GCP GCR), offering features like security, versioning, and integration with cloud platforms. 
+
+<p style="display:flex; gap:20px">
+<img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/aws.png" width="30px">
+<img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/gcp.png" width="30px">
+<img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/microsoft_azure.png" width="30px">
+<img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/digital_ocean.png" width="30px">
+</p>
+<br>
+
 <img src="https://miro.medium.com/v2/resize:fit:1400/1*STd9u5TPBJx1PtIr5C2ASA.jpeg" alt="containers don't solve evrything" width="500px">
-
-
-
 
 ### Disadvantages of Docker 🙆
 1. **Uses more system resources:** Containers share the host OS, but running many containers still loads the CPU and RAM heavily.
@@ -282,6 +299,8 @@ If the app is badly optimized, containers make it even slower.
 6. **Security risks if misconfigured:** Containers share the kernel with the host.
 If one container escapes or is misconfigured, it can affect the host system.
 
+
+---
 ### Docker Compose 🎉🐋
 
 Docker Compose is a tool for defining and running multi-container applications. It is the key to unlocking a streamlined and efficient development and deployment experience.
@@ -363,7 +382,50 @@ services:
 
 
 ---
+<br>
+<br>
+<br>
+<br>
+<br>
+
 ---
 
+<br>
+<br>
+<br>
+<br>
 
-## Kubernetes
+
+<img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/kubernetes.png" width="100px">
+
+## Kubernetes - Container Orchestration
+
+Kubernetes, aka K8s, is an open source system for automating deployment, scaling, and management of containerized applications. It was initially developed by Google (predecesor -> Borg)
+The open source project is hosted by the Cloud Native Computing Foundation (CNCF).
+
+
+> ### Did you know ?
+> Kubernetes is greek for helmsman (a person who steers a ship or boat).
+
+### Why did we require K8s ?
+In real world applications, we rarely work with a single container, in microservice architecture we work with multiple services, dbs, message queues etc. 
+
+
+### Features of Kubernetes
+- Self Healing
+- Garbage Collection
+- Cloud Agnostic (Independent)
+- Reconciliation (Continous Loop)
+- Secret/Config Management
+- Auto-scaling
+
+
+### Componenets of Kubernetes
+
+
+![architecture gif](https://devtron.ai/blog/content/images/2024/09/2-ezgif.com-optimize.gif)
+
+
+# References
+
+[Medium Kubernetes Tutorial for Beginners](https://praveendandu24.medium.com/kubernetes-tutorial-for-beginners-mastering-the-basics-in-1-hour-332db7b5916b)

@@ -395,6 +395,14 @@ services:
 <br>
 <br>
 
+<img src="https://miro.medium.com/v2/resize:fit:640/format:webp/0*WIYBX1wGBpzCxU6f.jpg" height="200"/>
+
+
+<br>
+<br>
+<br>
+<br>
+
 
 <img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/kubernetes.png" width="100px">
 
@@ -425,7 +433,298 @@ In real world applications, we rarely work with a single container, in microserv
 
 ![architecture gif](https://devtron.ai/blog/content/images/2024/09/2-ezgif.com-optimize.gif)
 
+### Nodes
+In Kubernetes, a Node is a worker machine where containers are deployed and run. Each node represents an individual machine within the cluster, and it could be a physical or virtual machine. Nodes are responsible for running the actual workloads and providing the necessary resources to run containers.
+
+Example: minikube is a single-node kubernetes cluster tool for local deployment & testing.
+
+
+### Pods
+A Pod is the smallest deployable unit in Kubernetes and represents one or more tightly coupled containers. Containers within a pod share the same network namespace, enabling them to communicate with each other over localhost. A pod represents a single instance of a process in the cluster.
+
+**Why Pods and not just Containers ?**
+Honestly, K8s has full control on Pods, for scaling, or managing you application. K8s schedules pods to nodes, not individual containers. This ensures that related containers within the pod are co-located on the same node.
+
+Pods help in putting tightly coupled containers together. 
+
+### Service
+A Kubernetes Service is an abstraction that defines a stable endpoint to access a group of pods. It allows you to expose your application to other pods within the cluster or to external clients. Services provide load balancing and automatic scaling for the pods behind them, ensuring that the application remains highly available.
+
+**Types of Services:**
+1. **ClusterIP :** Exposes the service on the cluster internal IP. This is the default value and choosing this value you can only access the service from within the k8s cluster. (To test that we can create 2 services and pods, and can execute curl/wget cmds for other service)
+
+We can also do Port Fowarding to access a ClusterIP type service.
+
+2. **NodePort :** Exposes the service to each Node's external static port
+
+Service Example:
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app.kubernetes.io/name: MyApp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9376
+```
+
+
+
+![Service - how it interacts with Pods in Deployment](https://kubernetes.io/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg)
+
+### ConfigMap
+A Kubernetes ConfigMap is used to store configuration data that can be consumed by pods as environment variables or mounted as configuration files. It helps separate the configuration from the container image, making it easier to update configurations without rebuilding the container.
+
+ConfigMap Example:
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myconfigmap
+data:
+  username: k8s-admin
+  access_level: "1"
+```
+
+I used `kubectl create configmap <name> --from-file=<path>` command to create a configmap internally using the .env file.
+
+### Deployment
+A Kubernetes Deployment is a higher-level abstraction that manages a set of identical pods. It's ideal for stateless applications where individual pods are interchangeable. Deployments provide features like rolling updates, rollback, and scaling, making them suitable for web servers, APIs, and microservices.
+
+
+![](https://www.pulumi.com/templates/kubernetes-application/web-application/architecture.png)
+
+Deployment Example:
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+      - name: api-gateway
+        image: api-gateway:latest
+        imagePullPolicy: Never # only for local development, remove for production, add IfNotPresent or Always
+        envFrom:
+        - configMapRef:
+            name: api-gateway-env
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 3000
+```
+
+![](https://miro.medium.com/0*4WkH-pktvEttw65u.png)
+
+## Kubernetes (k8s) Command Cheatsheet
+
+### Minikube Commands
+
+```bash
+minikube start                          # Start a local Kubernetes cluster
+minikube stop                           # Stop the running cluster
+minikube delete                         # Delete the cluster
+minikube status                         # Show cluster status
+minikube version                        # Display minikube version
+
+minikube dashboard                      # Open Kubernetes dashboard in browser
+minikube service <service-name>         # Open service in browser
+minikube service <service-name> -n <namespace> # Open service in specific namespace
+
+minikube ip                             # Get minikube cluster IP
+minikube ssh                            # SSH into minikube VM
+minikube logs                           # View minikube logs
+
+minikube config set <key> <value>       # Set minikube configuration
+minikube config view                    # View minikube configuration
+
+minikube pause                          # Pause the cluster
+minikube unpause                        # Resume the cluster
+
+minikube mount <source>:<target>        # Mount directory into minikube
+minikube tunnel                         # Create tunnel for LoadBalancer services
+```
+
+### Cluster Information
+
+```bash
+kubectl cluster-info                    # Display cluster info
+kubectl version                         # Show kubectl and cluster versions
+kubectl config view                     # Show kubeconfig settings
+kubectl config current-context          # Display current context
+kubectl config get-contexts             # List all contexts
+kubectl config use-context <context>    # Switch to a different context
+```
+
+### Node Commands
+
+```bash
+kubectl get nodes                       # List all nodes
+kubectl describe node <node-name>       # Show detailed node info
+kubectl top node                        # Show node resource usage
+kubectl cordon <node-name>              # Mark node as unschedulable
+kubectl uncordon <node-name>            # Mark node as schedulable
+kubectl drain <node-name>               # Drain node for maintenance
+```
+
+### Pod Commands
+
+```bash
+kubectl get pods                        # List pods in current namespace
+kubectl get pods -A                     # List pods in all namespaces
+kubectl get pods -n <namespace>         # List pods in specific namespace
+kubectl get pods -o wide                # List pods with more details
+kubectl describe pod <pod-name>         # Show detailed pod info
+kubectl logs <pod-name>                 # Print pod logs
+kubectl logs <pod-name> -c <container>  # Print specific container logs
+kubectl logs -f <pod-name>              # Stream pod logs
+kubectl exec -it <pod-name> -- /bin/bash # Execute shell in pod
+kubectl exec <pod-name> -- <command>    # Execute command in pod
+kubectl delete pod <pod-name>           # Delete a pod
+kubectl top pod                         # Show pod resource usage
+```
+
+### Deployment Commands
+
+```bash
+kubectl get deployments                 # List deployments
+kubectl describe deployment <name>      # Show deployment details
+kubectl create deployment <name> --image=<image> # Create deployment
+kubectl delete deployment <name>        # Delete deployment
+kubectl scale deployment <name> --replicas=<n> # Scale deployment
+kubectl rollout restart deployment <name> # Restart the Deployment
+kubectl rollout status deployment <name> # Check rollout status
+kubectl rollout history deployment <name> # View rollout history
+kubectl rollout undo deployment <name>  # Rollback to previous version
+kubectl set image deployment/<name> <container>=<image> # Update image
+kubectl edit deployment <name>          # Edit deployment in editor
+```
+
+### Service Commands
+
+```bash
+kubectl get services                    # List services
+kubectl get svc                         # List services (short form)
+kubectl describe service <name>         # Show service details
+kubectl expose deployment <name> --port=<port> --type=<type> # Create service
+kubectl delete service <name>           # Delete service
+```
+
+### Namespace Commands
+
+```bash
+kubectl get namespaces                  # List namespaces
+kubectl get ns                          # List namespaces (short form)
+kubectl create namespace <name>         # Create namespace
+kubectl delete namespace <name>         # Delete namespace
+kubectl config set-context --current --namespace=<name> # Set default namespace
+```
+
+### ConfigMap & Secret Commands
+
+```bash
+kubectl get configmaps                  # List ConfigMaps
+kubectl get cm                          # List ConfigMaps (short form)
+kubectl describe configmap <name>       # Show ConfigMap details
+kubectl create configmap <name> --from-file=<path> # Create from file
+kubectl create configmap <name> --from-literal=<key>=<value> # Create from literal
+
+kubectl get secrets                     # List secrets
+kubectl describe secret <name>          # Show secret details
+kubectl create secret generic <name> --from-literal=<key>=<value> # Create secret
+kubectl create secret docker-registry <name> --docker-server=<server> # Docker registry secret
+```
+
+### Resource Management
+
+```bash
+kubectl apply -f <file.yaml>            # Create/update resources from file
+kubectl create -f <file.yaml>           # Create resources from file
+kubectl delete -f <file.yaml>           # Delete resources from file
+kubectl replace -f <file.yaml>          # Replace resources from file
+kubectl diff -f <file.yaml>             # Show differences
+
+kubectl get all                         # List all resources
+kubectl get all -A                      # List all resources in all namespaces
+kubectl delete all --all                # Delete all resources (dangerous!)
+```
+
+### Labels & Selectors
+
+```bash
+kubectl get pods --show-labels          # Show pod labels
+kubectl get pods -l <key>=<value>       # Filter by label
+kubectl label pod <name> <key>=<value>  # Add label to pod
+kubectl label pod <name> <key>-         # Remove label from pod
+```
+
+### Persistent Volumes
+
+```bash
+kubectl get pv                          # List persistent volumes
+kubectl get pvc                         # List persistent volume claims
+kubectl describe pv <name>              # Show PV details
+kubectl describe pvc <name>             # Show PVC details
+```
+
+### Jobs & CronJobs
+
+```bash
+kubectl get jobs                        # List jobs
+kubectl get cronjobs                    # List cronjobs
+kubectl describe job <name>             # Show job details
+kubectl create job <name> --image=<image> # Create job
+kubectl delete job <name>               # Delete job
+```
+
+### Troubleshooting
+
+```bash
+kubectl get events                      # List cluster events
+kubectl get events --sort-by=.metadata.creationTimestamp # Sort events
+kubectl describe <resource> <name>      # Debug resource issues
+kubectl logs <pod-name> --previous      # Get logs from crashed container
+kubectl port-forward <pod-name> <local-port>:<pod-port> # Forward port
+kubectl cp <pod-name>:<path> <local-path> # Copy files from pod
+kubectl cp <local-path> <pod-name>:<path> # Copy files to pod
+kubectl attach <pod-name>               # Attach to running container
+```
+
+
+### Useful Flags
+
+```bash
+--all-namespaces, -A                   # All namespaces
+--namespace <name>, -n <name>          # Specific namespace
+--watch, -w                            # Watch for changes
+--dry-run=client -o yaml               # Generate YAML without creating
+--force                                # Force operation
+--grace-period=<seconds>               # Grace period for deletion
+--help, -h                             # Help for command
+```
+
+<img src="https://miro.medium.com/v2/resize:fit:1400/0*q8r3v5NwVS7GoZiy.jpg" height="500" />
 
 # References
 
 [Medium Kubernetes Tutorial for Beginners](https://praveendandu24.medium.com/kubernetes-tutorial-for-beginners-mastering-the-basics-in-1-hour-332db7b5916b)
+
+[Kubernetes Tutorial for Beginners [FULL COURSE in 4 Hours] | TechWorld with Nana](https://www.youtube.com/watch?v=X48VuDVv0do)

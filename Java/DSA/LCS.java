@@ -1,14 +1,14 @@
 public class LCS {
 	/**
-	 * LCS (Longest Common Subsequence) Characters need to appear in the same order, but not necessarily continuously.
+	 * LCS (Longest Common Subsequence) Characters need to appear in the same order,
+	 * but not necessarily continuously.
 	 */
 	public static int longestCommonSubSeq(String a, String b) {
 		int m = a.length();
 		int n = b.length();
 
-		
 		int[][] dp = new int[m + 1][n + 1];
-		
+
 		for (int i = 1; i <= m; i++) {
 			for (int j = 1; j <= n; j++) {
 				if (a.charAt(i - 1) == b.charAt(j - 1)) {
@@ -18,18 +18,18 @@ public class LCS {
 				}
 			}
 		}
-		
+
 		// now that the dp matrix is filled, we can find the longest common subsequence
 		StringBuilder sb = new StringBuilder(); // stores the answer
 		int i = m;
 		int j = n;
-		
-		while(i>0 && j>0) { 
-			if(a.charAt(i-1) == b.charAt(j-1)) {
-				sb.append(a.charAt(i-1));
+
+		while (i > 0 && j > 0) {
+			if (a.charAt(i - 1) == b.charAt(j - 1)) {
+				sb.append(a.charAt(i - 1));
 				i--;
 				j--;
-			} else if(dp[i-1][j] > dp[i][j-1]) {
+			} else if (dp[i - 1][j] > dp[i][j - 1]) {
 				i--;
 			} else {
 				j--;
@@ -40,25 +40,24 @@ public class LCS {
 		return dp[m][n];
 	}
 
-
-
 	/**
-	 * LCS (Longest Common Substring) Characters must be continuous and consecutive in both strings.
+	 * LCS (Longest Common Substring) Characters must be continuous and consecutive
+	 * in both strings.
 	 */
 	public static int longestCommonSubStr(String a, String b) {
 		int m = a.length();
 		int n = b.length();
-	
-		int[][] dp = new int[m+1][n+1];
-		
+
+		int[][] dp = new int[m + 1][n + 1];
+
 		int maxLen = 0;
 		int endIdx = 0;
 
-		for(int i=1; i<=m; i++) {
-			for(int j=1; j<=n; j++) {
-				if(a.charAt(i-1) == b.charAt(j-1)) {
-					dp[i][j] = dp[i-1][j-1] + 1;
-					if(dp[i][j] > maxLen) {
+		for (int i = 1; i <= m; i++) {
+			for (int j = 1; j <= n; j++) {
+				if (a.charAt(i - 1) == b.charAt(j - 1)) {
+					dp[i][j] = dp[i - 1][j - 1] + 1;
+					if (dp[i][j] > maxLen) {
 						maxLen = dp[i][j]; // if there was a common substring, it will grow diagonally 1 -> 2 -> 3
 						endIdx = i;
 					}
@@ -68,8 +67,7 @@ public class LCS {
 			}
 		}
 
-
-		System.out.println(a.substring(endIdx-maxLen, endIdx));
+		System.out.println(a.substring(endIdx - maxLen, endIdx));
 		return maxLen;
 	}
 
@@ -77,34 +75,67 @@ public class LCS {
 		// if we notice in the formulae
 		// MATCH => dp[i][j] = dp[i-1][j-1] + 1
 		// NO MATCH => dp[i][j] = max(dp[i-1][j], dp[i][j-1])
-		// we can reduce the space taken from O(m*n) to merely O(m) if we consider only the current row and the prev row, all before rows are not required
+		// we can reduce the space taken from O(m*n) to merely O(m) if we consider only
+		// the current row and the prev row, all before rows are not required
 
 		public static int longestCommonSubSeq(String a, String b) {
 			int m = a.length();
 			int n = b.length();
 
-			int[] prev = new int[m+1];
-			int[] curr = new int[m+1];
+			int[] prev = new int[m + 1];
+			int[] curr = new int[m + 1];
 
 			for (int i = 1; i <= m; i++) {
 				for (int j = 1; j <= n; j++) {
 					if (a.charAt(i - 1) == b.charAt(j - 1)) {
-						curr[j] = prev[j-1] +1;
+						curr[j] = prev[j - 1] + 1;
 					} else {
-						curr[j] = Math.max(prev[j], curr[j-1]);
+						curr[j] = Math.max(prev[j], curr[j - 1]);
 					}
 				}
 				prev = curr;
-				curr = new int[m+1];
+				curr = new int[m + 1];
 			}
-
 
 			return prev[m];
 		}
 
 	}
 
+	/**
+	 * Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*' where:
+		'?' Matches any single character.
+		'*' Matches any sequence of characters (including the empty sequence).
+	 */
+	public boolean isMatch(String s, String p) {
+		int m = s.length();
+		int n = p.length();
 
+		boolean[] prev = new boolean[n + 1];
+		boolean[] curr = new boolean[n + 1];
+
+		prev[0] = true;
+		for (int j = 1; j <= n; j++) {
+			if (p.charAt(j - 1) == '*')
+				prev[j] = prev[j - 1];
+		}
+
+		for (int i = 1; i <= m; i++) {
+			for (int j = 1; j <= n; j++) {
+				// character match or "?" match
+				if (s.charAt(i - 1) == p.charAt(j - 1) || p.charAt(j - 1) == '?') {
+					curr[j] = prev[j - 1];
+				} else if (p.charAt(j - 1) == '*') {
+					curr[j] = prev[j] || curr[j - 1];
+				}
+			}
+			prev = curr;
+			curr = new boolean[n + 1];
+			curr[0] = false;
+		}
+
+		return prev[n];
+	}
 
 	public static void main(String[] args) {
 		String a = "abecdg";

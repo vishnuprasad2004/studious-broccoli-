@@ -52,11 +52,42 @@ public class TopologicalSorting {
 		return ans;
 	}
 
+	public static List<Integer> kahnTopologicalSort(ArrayList<Edge>[] graph) {
+		int[] indegree = new int[graph.length];
+		int n = graph.length;
+		Queue<Integer> q = new LinkedList<>();
+    ArrayList<Integer> result = new ArrayList<>();
+
+		for(int i=0; i< indegree.length; i++) {
+			for(Edge edge: graph[i]) {
+				indegree[edge.dest]++;
+			}
+		}
+
+		for(int i=0; i<indegree.length; i++) {
+			if(indegree[i] == 0) q.add(i);
+		}
+
+		while(!q.isEmpty()) {
+			int curr = q.poll();
+			result.add(curr);
+			for(Edge edge: graph[curr]) {
+				indegree[edge.dest]--;
+				if(indegree[edge.dest] == 0) {
+					q.add(edge.dest);
+				}
+			}
+		}
+
+		return result;
+	}
+
 	public static void main(String[] args) {
 		int V = 6;
         ArrayList<Edge> graph[] = new ArrayList[V]; // directed graph - only DAGs allowed here
 		createGraph(graph);
 		System.out.println(topologicaSort(graph));
+		System.out.println(kahnTopologicalSort(graph));
 	}
 
 }

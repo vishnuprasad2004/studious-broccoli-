@@ -33,6 +33,8 @@ public class TwoPointers {
     return ans;
   }
 
+  
+
   public static void main(String[] args) {
     System.out.println(minCost("abaac", new int[]{1,2,3,4,5}));
   }
